@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            max-width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: rgb(117, 168, 117);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgb(117, 168, 117);
+        }
+
+        .login-btn {
+            background-color: rgb(117, 168, 117);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-btn:hover {
+            background-color: #95c595;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .signup-link a {
+            color: rgb(117, 168, 117);
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <div class="login-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="Password" name="password" required>
+            </div>
+            <button onclick="SignUp()" class="login-btn">Sign Up</button>
+        </div>
+        <div class="signup-link">
+            Already have an account? <a href="/login">Login in</a>
+        </div>
+    </div>
+
+    <script>
+
+        async function SignUp() {
+
+            let name = document.getElementById("name").value
+            let email = document.getElementById("email").value
+            let password = document.getElementById("Password").value
+
+            if (!name || !email || !password) {
+                alert("Please Enter Signup Credentials")
+                return
+            }
+
+            let Data = await fetch(`/signup`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                   name, email, password
+                })
+            })
+
+            Data = await Data.json();
+            if (Data.message == "SignUp Successfully") {
+                window.location = `/dashboard`
+            }else{
+                alert(Data.message)
+            }
+
+        }
+    </script>
+</body>
+
+</html>

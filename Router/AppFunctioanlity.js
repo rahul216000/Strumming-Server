@@ -17,7 +17,7 @@ if (!fs.existsSync(dir)) {
 
 
 router.get("/", (req, res) => {
-    res.send("Allowed")
+    res.render("Dashboard")
 })
 
 router.get('/files/:ID/:FileName', async (req, res) => {

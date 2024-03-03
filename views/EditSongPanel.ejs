@@ -1,0 +1,357 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar WebApp <%= SongName %></title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://guitar-webapp.netlify.app/premiumv1/style.css">
+</head>
+
+<body>
+
+    <div id="loading">
+
+        <img id="loading-image" src="https://guitar-webapp.netlify.app/premiumv1/Logo-Animation.gif">
+    </div>
+
+    <div id="Body" style="display: none;">
+        <!-- Enter BPM -->
+        <div class="container mt-2" style="font-weight: bold;">
+            Enter BPM <input type="number" value="70" id="BpmValue" onchange="ShowUpdateBPMOption()"
+                onkeypress="ShowUpdateBPMOption()">
+            <span id="UpdateBPMBtn" style="display: none;">
+                <button type="button" class="btn btn-outline-dark" id="UpdateBpmRealTime">Update BPM</button>
+                <button type="button" class="btn btn-outline-dark" onclick="CancelBPMChange()">Cancel</button>
+            </span>
+            <div class="settingDefaultTimeSign">
+                <input type="radio" class="btn-check" name="DefaultTimeSign" id="Default" autocomplete="off" checked
+                    onchange="ChangeAllBarsMode()">
+                <label class="btn btn-outline-success" for="Default">Default</label>
+
+                <input type="radio" class="btn-check" name="DefaultTimeSign" id="TimeSign16ths" autocomplete="off"
+                    onchange="ChangeAllBarsMode()">
+                <label class="btn btn-outline-success" for="TimeSign16ths">16ths</label>
+
+                <input type="radio" class="btn-check" name="DefaultTimeSign" id="Shuffle" autocomplete="off"
+                    onchange="ChangeAllBarsMode()">
+                <label class="btn btn-outline-success" for="Shuffle">Shuffle</label>
+
+                <!-- <button onclick="TempClear()">Temp Clear Data</button> -->
+            </div>
+        </div>
+
+        <!-- Metronome ON/OFF -->
+        <div class="container mt-2" style="font-weight: bold; height: 1.4em;">
+            <span>
+                Metronome
+            </span>
+
+            <label class="switch">
+                <input type="checkbox" id="metronomeSound" checked onclick="IsMetronomeClickOn(this)">
+                <span class="slider"></span>
+            </label>
+
+            <div class="settingDefaultTimeSign">
+                <button type="button" class="btn btn-outline-success" onclick="ResetAll()">Reset All</button>
+            </div>
+
+        </div>
+
+        <!-- Enter Pattern -->
+        <div class="container mt-3">
+            <div class="TimeSignature">
+                <div class="txt-bold" style="text-align:center;">
+                    Time <br>Signature
+                </div>
+
+                <div>
+                    <input class="miniBox" type="number" value="4" id="TimeSignatureTopValue"
+                        onchange="ChangeTimeSignature()">
+                </div>
+
+                <div>
+                    <select class="miniBox" id="TimeSignatureBottomValue" onchange="ChangeTimeSignature()">
+                        <!-- <option value="2">2</option> -->
+                        <option value="4" selected>4</option>
+                        <option value="8">8</option>
+                        <!-- <option value="16">16</option> -->
+                    </select>
+                </div>
+
+            </div>
+            <div class="MailLine"></div>
+            <div style="display: inline-block;" id="CreatePatternBlock">
+            </div>
+            <div id="UpdateTimeSignBtn" style="display: none;">
+                <button type="button" class="btn btn-outline-dark" onclick="UpdateTimeSign()">Update Time
+                    Signature</button>
+                <button type="button" class="btn btn-outline-dark" onclick="CancelTimeSign()">Cancel</button>
+            </div>
+        </div>
+
+        <!--Add Pattern loop -->
+        <div class="container mt-3" style="font-weight: bold;">
+            Add this pattern <input type="number" id="loopTimes" value="1"> times.
+        </div>
+
+        <!-- Btn to add Pattern -->
+        <div class="container mt-3">
+            <button type="button" class="btn btn-outline-dark" onclick="AddthisPattern()">Add this Pattern</button>
+            <button type="button" class="btn btn-outline-dark" onclick="ResetIt()">Reset it</button>
+        </div>
+
+        <!-- Section btns and transpose btns -->
+        <div class="container mt-3">
+
+            <div class="dropdownForSection" id="SectionContainer">
+                <div onclick="ShowSectionContents()">
+                    <div class="SongSectionEvent">Song Sections</div>
+                </div>
+                <div id="SectionContentID" class="dropdown-contentForSection">
+                </div>
+            </div>
+
+            <div style="float: right;">
+                <button type="button" class="btn btn-outline-success" id="NewSectionBtn" onclick="AddNewSectionofSong()" style="cursor: pointer; display: none;">New Section</button>
+                <button type="button" class="btn btn-outline-success" id="TransposeKeyBtn" onclick="ShowSettingPage()" style="cursor: pointer; display: none;">Transpose Key</button>
+            </div>
+
+        </div>
+
+        <!-- Section Range Input -->
+
+        <div class="container mt-3">
+
+            <div class="txt-bold" id="AddSectionRange" style="display: none;">
+                Select Pattern Range from <input type="number" class="miniBox" id="RangeFrom"> to <input type="number"
+                    class="miniBox" id="RangeTo">
+                <button type="button" class="btn btn-outline-dark " onclick="AddNewSectionRange()">Add Section</button>
+                <button type="button" class="btn btn-outline-dark " onclick="CancelBtnForNewSection()">Cancel</button>
+            </div>
+
+            <div class="txt-bold" id="UpdateSectionRange" style="display: none;">
+                Edit Range for <span id="EditRangeP"></span>: Select Pattern Range from <input type="number"
+                    class="miniBox" id="UpdateRangeFrom"> to <input type="number" class="miniBox" id="UpdateRangeTo">
+                <button type="button" class="btn btn-outline-dark " onclick="UpdateSectionRange()">Update Range</button>
+                <button type="button" class="btn btn-outline-dark " onclick="CancelBtnForUpdateSection()">Cancel</button>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- Copy & paste btns -->
+        <div class="container">
+            <div class="mt-2 CopyPasteBtn">
+                <span>
+                    Select Pattern Range from <input type="number" class="miniBox" id="TickRangeFrom"> to <input
+                        type="number" class="miniBox" id="TickRangeTo">
+                    <button type="button" class="btn btn-outline-dark " onclick="TickPatterns()">Tick Patterns</button>
+                    <button type="button" class="btn btn-outline-dark " onclick="UnselectAllPatterns()">Unselect
+                        All</button>
+                </span>
+                <button type="button" class="btn btn-outline-dark" onclick="DeleteMultiplePattern()">Delete</button>
+                <button type="button" class="btn btn-outline-dark" onclick="CopyMultiplePattern()">Copy</button>
+                <button type="button" class="btn btn-outline-dark" onclick="RunSpecificPattern()">Play Selected Patterns
+                    Only</button>
+                <button type="button" class="btn btn-outline-dark" onclick="CancelSelect()">Cancel</button>
+            </div>
+            <div class="mt-2 txt-bold CopyPasteBtn">
+                Paste it after <input type="number" class="miniBox" id="PasteAfterBars"> bars, <input type="number"
+                    class="miniBox" id="PasteBarLoop" value="1"> times.
+                <button type="button" class="btn btn-outline-dark " onclick="PasteMultiplePattern()">Paste</button>
+            </div>
+            <div class="mt-2 txt-bold CopyPasteBtn">
+                <button type="button" class="btn btn-outline-dark " onclick="BackToAllPatterns()">Back To All
+                    Patterns</button>
+            </div>
+        </div>
+
+        <!-- Intensity Change -->
+
+        <div class="container">
+            <div class="mt-2 mb-3 ChanheIntensitySelectDiv" style="float: right; display: none;">
+
+                <select class="ChanheIntensitySelect">
+                    <option value="default" selected>Def</option>
+                    <option value="soft">Soft</option>
+                    <option value="hard">Hard</option>
+                    <option value="Bass">Bass Only</option>
+                    <option value="BassShort">Short Bass</option>
+                    <option value="short-default">Short Default</option>
+                    <option value="short-soft">Short Soft</option>
+                    <option value="short-hard">Short Hard</option>
+                    <option value="muted-half">Half Muted</option>
+                    <option value="muted-full">Full Muted</option>
+                    <option value="arpeggiated">Arpeggiated</option>
+                    <option value="NC"> X (NC)</option>
+
+                </select>
+
+                <button type="button" class="btn btn-outline-dark" onclick="ChangeMultipleIntensityValue()">Change
+                    All</button>
+                <button type="button" class="btn btn-outline-dark" onclick="TickAllIntensity()">Select All</button>
+                <button type="button" class="btn btn-outline-dark" onclick="CancelIntensitySelect()">Cancel</button>
+            </div>
+
+        </div>
+
+        <!-- Display Pattern -->
+
+        <div class="container mt-3 scroll" id="DisplayPatternData">
+        </div>
+        <!-- BtnWithVideo -->
+        <div id="BtnWithVideo" style="display: none;">
+
+            <!-- Generate Btn -->
+            <div class="container mt-3" style="text-align: right;">
+                <input type="radio" class="btn-check" name="VideoType" value="handmade" id="Handmade" autocomplete="off"
+                    checked onclick="SetVideoType()" onchange="SetVideoType()">
+                <label class="btn btn-outline-success" for="Handmade">Realistic</label>
+
+                <input type="radio" class="btn-check" name="VideoType" value="animated" id="Animated" autocomplete="off"
+                    onclick="SetVideoType()" onchange="SetVideoType()">
+                <label class="btn btn-outline-success" for="Animated">Animated</label>
+
+            </div>
+            <div class="container mt-3" style="text-align: center;" id="GenerateVideoContainer">
+                <button type="button" class="btn btn-outline-dark" id="GenerateVideo" onclick="FetchFiles()">Generate
+                    Video</button>
+                <button type="button" class="btn btn-outline-dark" id="AdvancedMode"
+                    onclick="AdvancedMode()">AdvancedMode</button>
+                <!-- <button type="button" class="btn btn-outline-dark" id="AdvancedModeApply" onclick="AdvancedModeApply()" style="display: none;">Apply</button> -->
+                <button type="button" class="btn btn-outline-dark" id="AdvancedModeExit" onclick="AdvancedModeExit()"
+                    style="display: none;">Exit</button>
+                <button type="button" class="btn btn-outline-dark" onclick="StartVideo()" id="StartVideo"
+                    style="display: none;">Start Video</button>
+
+                <button type="button" class="btn btn-outline-dark" style="display: none;"
+                    id="PlayPauseVideo">Pause</button>
+                <!-- <button type="button" class="btn btn-outline-dark" style="display: none;" id="PlayVideo">Play</button> -->
+                <button type="button" class="btn btn-outline-dark" style="display: none;"
+                    id="RestartVideo">Restart</button>
+
+                <button type="button" class="btn btn-outline-dark" id="DownloadVideo" onclick="DownloadVideo()">Download Video</button>
+            <!-- <button type="button" class="btn btn-outline-dark" id="DownloadVideo" onclick="DownloadAudio()">Download Audio</button> -->
+            </div>
+            <!-- Video Player Render -->
+            <div class="mt-3 VideoPlayer">
+                <div class="fixed-container" id="ChordHandVideoSection">
+
+                </div>
+                <div class="fixed-container" id="ChordVideoSection">
+
+                </div>
+
+                <!-- Diagrams -->
+                <div class="Diagrams fixed-container" id="DiagramsContainer">
+
+
+                </div>
+
+            </div>
+        </div>
+        <!-- <img src="./C7 (4).png" alt="" srcset="" width="80" height="90">
+        <div class="mt-5"></div> -->
+        <section id="AudioSecion">
+
+        </section>
+
+        <section style="display: none;">
+            <p id="InstantPlaySection"></p>
+        </section>
+
+        <section id="SettingPage" style="display: none;">
+
+            <div>
+                <div class="TrandposeHeading">
+                    <span>Transpose Key</span>
+                    <span style="float: right; cursor: pointer;">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="CloseSettingPage()" width="30" height="30"
+                            fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                        </svg>
+
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="IncrementTransposeKey()" width="26" height="26"
+                            fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                        </svg>
+                    </span>
+
+                    <span>
+                        <input type="text" readonly class="miniBox" value="0" id="TransposeKeyValue">
+                    </span>
+
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="DecrementTransposeKey()" width="26" height="26"
+                            fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                        </svg>
+                    </span>
+                </div>
+
+                <div class="mt-3">
+                    <button type="button" onclick="UpdateTransposeKey()" class="btn btn-outline-success">Update
+                        Transpose key</button>
+                </div>
+            </div>
+
+        </section>
+
+        
+    </div>
+
+    <script>
+        
+        let CurrentSongData = {
+            UID:`<%- CurrentSongData._id %>`,
+            SongName:`<%- CurrentSongData.SongName %>`,
+            AdvancedMode:`<%- CurrentSongData.AdvancedMode %>`,
+            BPM:`<%- CurrentSongData.BPM %>`,
+            BeatArr:`<%- CurrentSongData.BeatArr %>`,
+            DefaultTimeSign:`<%- CurrentSongData.DefaultTimeSign %>`,
+            IntensityArr:`<%- CurrentSongData.IntensityArr %>`,
+            MainValue:`<%- CurrentSongData.MainValue %>`,
+            Metronome:`<%- CurrentSongData.Metronome %>`,
+            ModeArr:`<%- CurrentSongData.ModeArr %>`,
+            SectionNames:`<%- CurrentSongData.SectionNames %>`,
+            SectionNamesValue:`<%- CurrentSongData.SectionNamesValue %>`,
+            StrummingPatterns:`<%- CurrentSongData.StrummingPatterns %>`,
+            TimeSignatureBottomValue:`<%- CurrentSongData.AdvancedMode %>`,
+            TimeSignatureTopValue:`<%- CurrentSongData.AdvancedMode %>`,
+            TransposeKey:`<%- CurrentSongData.AdvancedMode %>`,
+
+        }
+
+    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://guitar-webapp.netlify.app/premiumv1/app-functionality.js"></script>
+    <script src="https://guitar-webapp.netlify.app/premiumv1/script.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
