@@ -6,6 +6,10 @@ const SongData = require('../Model/SongData');
 
 const {verifyToken, verifiedUserEmail} = require("../Authentiation/verification")
 
+router.get("/", verifyToken, verifiedUserEmail, (req, res) => {
+    res.render("Dashboard")
+})
+
 router.get("/my-songs", verifyToken, verifiedUserEmail, async (req, res) => {
 
     try {

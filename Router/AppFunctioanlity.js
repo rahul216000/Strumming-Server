@@ -16,10 +16,6 @@ if (!fs.existsSync(dir)) {
 }
 
 
-router.get("/", (req, res) => {
-    res.render("Dashboard")
-})
-
 router.get('/files/:ID/:FileName', async (req, res) => {
     let FileName = req.params["FileName"]
     let ID = req.params["ID"]
