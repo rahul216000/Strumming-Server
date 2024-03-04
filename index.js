@@ -11,7 +11,7 @@ dotenv.config({ path: './config.env' });
 app.use(cors({
   origin: [
     'http://127.0.0.1:5500',
-  // 'https://guitar-webapp.netlify.app'
+  'https://guitar-webapp.netlify.app'
 ]
 }));
 
