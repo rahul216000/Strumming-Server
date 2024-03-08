@@ -576,6 +576,28 @@ function playClickMetronome() {
             sound.currentTime = 0;
 
         }
+
+        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
+            CheckMetronomeOn()
+            if (metronomeSound) {
+
+                if (count == beatsPerMeasure) {
+                    count = 0;
+                }
+                const click1 = document.getElementById("Click1.wav")
+                const click2 = document.getElementById("Click2.wav")
+                if (count == 0) {
+                    click1.play();
+                    click1.currentTime = 0;
+                } else {
+                    click2.play();
+                    click2.currentTime = 0;
+                }
+
+                count++
+            }
+        }
+        
         try {
 
             if (isNCMuted) {
@@ -599,109 +621,8 @@ function playClickMetronome() {
             console.log(error);
         }
 
-        // let OneTime
-        // if (document.getElementById("TimeSignatureBottomValue").value == 4) {
-        //     // console.log(BeatArr[BeatIncreaseNumber]);
-        //     // BeatIncreaseNumber++
-        //     switch (ModeArr[BarcountClass - 1]) {
-        //         case "Default":
-        //             RunMetronomeAfterTimes = 2
-        //             OneTime = RunMetronomeOneTime
-        //             break;
-        //         case "Shuffle":
-        //             RunMetronomeAfterTimes = 3
-        //             OneTime = RunMetronomeOneTimeForShuffle
-        //             break;
-        //         case "16ths":
-        //             RunMetronomeAfterTimes = 4
-        //             OneTime = RunMetronomeOneTimeFor16ths
-
-        //             break;
-
-        //         default:
-        //             break;
-        //     }
-        // } else {
-        //     switch (ModeArr[BarcountClass - 1]) {
-        //         case "Default":
-        //             RunMetronomeAfterTimes = 1
-        //             OneTime = MetronomeDefaultby8
-        //             break;
-        //         case "Shuffle":
-        //             RunMetronomeAfterTimes = 3
-        //             OneTime = MetronomeShuffletby8
-        //             break;
-        //         case "16ths":
-        //             RunMetronomeAfterTimes = 2
-        //             OneTime = Metronome16thsby8
-
-        //             break;
-
-        //         default:
-        //             break;
-        //     }
-        // }
-
-
-
-        // MetronomeClickArr[BeatIncreaseNumber]
-
-
-        // if (OneTime % RunMetronomeAfterTimes == 0) {
-        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
-            CheckMetronomeOn()
-            if (metronomeSound) {
-
-                if (count == beatsPerMeasure) {
-                    count = 0;
-                }
-                const click1 = document.getElementById("Click1.wav")
-                const click2 = document.getElementById("Click2.wav")
-                if (count == 0) {
-                    click1.play();
-                    click1.currentTime = 0;
-                } else {
-                    click2.play();
-                    click2.currentTime = 0;
-                }
-
-                count++
-            }
-        }
+        
         BeatIncreaseNumber++
-
-        // if (document.getElementById("TimeSignatureBottomValue").value == 4) {
-        //     switch (ModeArr[BarcountClass - 1]) {
-        //         case "Default":
-        //             RunMetronomeOneTime++
-        //             break;
-        //         case "Shuffle":
-        //             RunMetronomeOneTimeForShuffle++
-        //             break;
-        //         case "16ths":
-        //             RunMetronomeOneTimeFor16ths++
-        //             break;
-
-        //         default:
-        //             break;
-        //     }
-        // } else {
-        //     switch (ModeArr[BarcountClass - 1]) {
-        //         case "Default":
-        //             MetronomeDefaultby8++
-        //             break;
-        //         case "Shuffle":
-        //             MetronomeShuffletby8++
-        //             break;
-        //         case "16ths":
-        //             Metronome16thsby8++
-        //             break;
-
-        //         default:
-        //             break;
-        //     }
-        // }
-
 
         countArrOfPattern++
 
