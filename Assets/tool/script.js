@@ -493,9 +493,9 @@ function StrummingPattern(pattern, chord, number) {
         try {
             let ChordVideo = document.getElementById(`${chord}-${VideoType}.mp4`);
             ChordVideo.currentTime = 2
-            
+
         } catch (error) {
-            
+
         }
 
         try {
@@ -515,8 +515,10 @@ function StrummingPattern(pattern, chord, number) {
 }
 
 
-
 function playClickMetronome() {
+
+    // let time = new Date().getTime()
+    // console.log(time);
 
 
 
@@ -525,6 +527,26 @@ function playClickMetronome() {
         SetUpAudio(countArrOfPattern)
 
         // ChordVideo()
+
+        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
+            CheckMetronomeOn()
+            if (metronomeSound) {
+                if (count == beatsPerMeasure) {
+                    count = 0;
+                }
+                const click1 = document.getElementById("Click1.wav")
+                const click2 = document.getElementById("Click2.wav")
+                if (count == 0) {
+                    click1.play();
+                    click1.currentTime = 0;
+                } else {
+                    click2.play();
+                    click2.currentTime = 0;
+                }
+
+                count++
+            }
+        }
 
         if (DownOrUp == "D") {
 
@@ -577,27 +599,8 @@ function playClickMetronome() {
 
         }
 
-        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
-            CheckMetronomeOn()
-            if (metronomeSound) {
-
-                if (count == beatsPerMeasure) {
-                    count = 0;
-                }
-                const click1 = document.getElementById("Click1.wav")
-                const click2 = document.getElementById("Click2.wav")
-                if (count == 0) {
-                    click1.play();
-                    click1.currentTime = 0;
-                } else {
-                    click2.play();
-                    click2.currentTime = 0;
-                }
-
-                count++
-            }
-        }
         
+
         try {
 
             if (isNCMuted) {
@@ -621,7 +624,7 @@ function playClickMetronome() {
             console.log(error);
         }
 
-        
+
         BeatIncreaseNumber++
 
         countArrOfPattern++
@@ -792,7 +795,7 @@ function StopSounding(StoreSound) {
 }
 
 
-const Metronome = new MetronomeTimer(playClickMetronome, 60000 / 140, { immediate: true });
+const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
 
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
