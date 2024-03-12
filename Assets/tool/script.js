@@ -78,54 +78,54 @@ function StartVideo() {
     }
 
 
-    RunMetronomeOneTime = document.getElementById("TimeSignatureBottomValue").value;
-    RunMetronomeAfterTimes = document.getElementById("TimeSignatureBottomValue").value;
+    // RunMetronomeOneTime = document.getElementById("TimeSignatureBottomValue").value;
+    // RunMetronomeAfterTimes = document.getElementById("TimeSignatureBottomValue").value;
 
     // let DefaultTimeSign = localStorage.getItem("DefaultTimeSign")
-    switch (DefaultTimeSign) {
-        case "Default":
-            if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-                RunMetronomeOneTime = 2;
-                RunMetronomeAfterTimes = 2;
-                document.getElementById("TimeSignatureBottomValue").value = 4;
-            } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-                RunMetronomeOneTime = 3
-                RunMetronomeAfterTimes = 3
-            } else {
-                RunMetronomeOneTime = 8 / RunMetronomeOneTime;
-                RunMetronomeAfterTimes = 8 / RunMetronomeAfterTimes;
-            }
-            break;
-        case "16ths":
-            if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-                RunMetronomeOneTime = 4;
-                RunMetronomeAfterTimes = 4;
-                document.getElementById("TimeSignatureBottomValue").value = 4;
-            } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-                RunMetronomeOneTime = 1
-                RunMetronomeAfterTimes = 1
-            } else {
-                RunMetronomeOneTime = 16 / RunMetronomeOneTime;
-                RunMetronomeAfterTimes = 16 / RunMetronomeAfterTimes;
-            }
-            break;
-        case "Shuffle":
-            if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-                RunMetronomeOneTime = 3;
-                RunMetronomeAfterTimes = 3;
-                document.getElementById("TimeSignatureBottomValue").value = 4;
-            } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-                RunMetronomeOneTime = 3
-                RunMetronomeAfterTimes = 3
-            } else {
-                RunMetronomeOneTime = 12 / RunMetronomeOneTime;
-                RunMetronomeAfterTimes = 12 / RunMetronomeAfterTimes;
-            }
-            break;
+    // switch (DefaultTimeSign) {
+    //     case "Default":
+    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
+    //             RunMetronomeOneTime = 2;
+    //             RunMetronomeAfterTimes = 2;
+    //             document.getElementById("TimeSignatureBottomValue").value = 4;
+    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
+    //             RunMetronomeOneTime = 3
+    //             RunMetronomeAfterTimes = 3
+    //         } else {
+    //             RunMetronomeOneTime = 8 / RunMetronomeOneTime;
+    //             RunMetronomeAfterTimes = 8 / RunMetronomeAfterTimes;
+    //         }
+    //         break;
+    //     case "16ths":
+    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
+    //             RunMetronomeOneTime = 4;
+    //             RunMetronomeAfterTimes = 4;
+    //             document.getElementById("TimeSignatureBottomValue").value = 4;
+    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
+    //             RunMetronomeOneTime = 1
+    //             RunMetronomeAfterTimes = 1
+    //         } else {
+    //             RunMetronomeOneTime = 16 / RunMetronomeOneTime;
+    //             RunMetronomeAfterTimes = 16 / RunMetronomeAfterTimes;
+    //         }
+    //         break;
+    //     case "Shuffle":
+    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
+    //             RunMetronomeOneTime = 3;
+    //             RunMetronomeAfterTimes = 3;
+    //             document.getElementById("TimeSignatureBottomValue").value = 4;
+    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
+    //             RunMetronomeOneTime = 3
+    //             RunMetronomeAfterTimes = 3
+    //         } else {
+    //             RunMetronomeOneTime = 12 / RunMetronomeOneTime;
+    //             RunMetronomeAfterTimes = 12 / RunMetronomeAfterTimes;
+    //         }
+    //         break;
 
-        default:
-            break;
-    }
+    //     default:
+    //         break;
+    // }
 
     TheMainValue = localStorage.getItem("TheMainValue")
 
@@ -135,7 +135,43 @@ function StartVideo() {
         document.getElementById("BpmValue").value = 70
     }
     bpm = parseInt(bpm)
-    changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
+
+    if (document.getElementById("TimeSignatureBottomValue").value == 4) {
+
+        switch (MetronomeSpeedArr[0]) {
+            case "Default":
+                changeMetronomeInterval(bpm, 2);
+                break;
+            case "Shuffle":
+                changeMetronomeInterval(bpm, 3);
+
+                break;
+            case "16ths":
+                changeMetronomeInterval(bpm, 4);
+                break;
+
+            default:
+                break;
+        }
+    } else {
+        switch (MetronomeSpeedArr[0]) {
+            case "Default":
+                changeMetronomeInterval(bpm, 2);
+                break;
+            case "Shuffle":
+                changeMetronomeInterval(bpm, 6);
+
+                break;
+            case "16ths":
+                changeMetronomeInterval(bpm, 4);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
 
     let isMetronomeChecked = document.getElementById("metronomeSound").checked;
     if (isMetronomeChecked) {
@@ -230,7 +266,7 @@ function RestartVideo() {
     metronomeSound = true;
     StrummingPatternArr = "";
     RunMetronomeOneTime = 2;
-    RunMetronomeAfterTimes = 2;
+    // RunMetronomeAfterTimes = 2;
 
     BarcountClass = 1;
     Barcount = 0;
@@ -282,7 +318,8 @@ UpdateBpmRealTime.addEventListener('click', () => {
     }
     bpm = parseInt(bpm)
     localStorage.setItem("BPM", bpm)
-    changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
+    // changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
+    // changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
     document.getElementById("UpdateBPMBtn").style.display = "none";
 })
 
@@ -517,8 +554,8 @@ function StrummingPattern(pattern, chord, number) {
 
 function playClickMetronome() {
 
-    // let time = new Date().getTime()
-    // console.log(time);
+    let time = new Date().getTime()
+    console.log(time);
 
 
 
@@ -528,25 +565,6 @@ function playClickMetronome() {
 
         // ChordVideo()
 
-        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
-            CheckMetronomeOn()
-            if (metronomeSound) {
-                if (count == beatsPerMeasure) {
-                    count = 0;
-                }
-                const click1 = document.getElementById("Click1.wav")
-                const click2 = document.getElementById("Click2.wav")
-                if (count == 0) {
-                    click1.play();
-                    click1.currentTime = 0;
-                } else {
-                    click2.play();
-                    click2.currentTime = 0;
-                }
-
-                count++
-            }
-        }
 
         if (DownOrUp == "D") {
 
@@ -599,6 +617,26 @@ function playClickMetronome() {
 
         }
 
+
+        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
+            CheckMetronomeOn()
+            if (metronomeSound) {
+                if (count == beatsPerMeasure) {
+                    count = 0;
+                }
+                const click1 = document.getElementById("Click1.wav")
+                const click2 = document.getElementById("Click2.wav")
+                if (count == 0) {
+                    click1.play();
+                    click1.currentTime = 0;
+                } else {
+                    click2.play();
+                    click2.currentTime = 0;
+                }
+
+                count++
+            }
+        }
         
 
         try {
@@ -673,6 +711,8 @@ function playClickMetronome() {
 }
 
 function StopSounding(StoreSound) {
+    return
+
     let up = document.getElementById(`${StoreSound}-default-up.wav`)
     let down = document.getElementById(`${StoreSound}-default-down.wav`)
 
