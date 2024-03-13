@@ -2912,9 +2912,10 @@ async function FetchFiles() {
 }
 
 function StartVideo() {
+    
     document.getElementById("RestartVideo").click();
     document.getElementById("StartVideo").style.display = "none"
-
+    
     document.getElementById("PlayPauseVideo").style.display = "inline-block"
     document.getElementById("RestartVideo").style.display = "inline-block"
 

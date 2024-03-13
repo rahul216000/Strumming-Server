@@ -78,55 +78,6 @@ function StartVideo() {
     }
 
 
-    // RunMetronomeOneTime = document.getElementById("TimeSignatureBottomValue").value;
-    // RunMetronomeAfterTimes = document.getElementById("TimeSignatureBottomValue").value;
-
-    // let DefaultTimeSign = localStorage.getItem("DefaultTimeSign")
-    // switch (DefaultTimeSign) {
-    //     case "Default":
-    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-    //             RunMetronomeOneTime = 2;
-    //             RunMetronomeAfterTimes = 2;
-    //             document.getElementById("TimeSignatureBottomValue").value = 4;
-    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-    //             RunMetronomeOneTime = 3
-    //             RunMetronomeAfterTimes = 3
-    //         } else {
-    //             RunMetronomeOneTime = 8 / RunMetronomeOneTime;
-    //             RunMetronomeAfterTimes = 8 / RunMetronomeAfterTimes;
-    //         }
-    //         break;
-    //     case "16ths":
-    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-    //             RunMetronomeOneTime = 4;
-    //             RunMetronomeAfterTimes = 4;
-    //             document.getElementById("TimeSignatureBottomValue").value = 4;
-    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-    //             RunMetronomeOneTime = 1
-    //             RunMetronomeAfterTimes = 1
-    //         } else {
-    //             RunMetronomeOneTime = 16 / RunMetronomeOneTime;
-    //             RunMetronomeAfterTimes = 16 / RunMetronomeAfterTimes;
-    //         }
-    //         break;
-    //     case "Shuffle":
-    //         if (!RunMetronomeOneTime || RunMetronomeOneTime <= 0) {
-    //             RunMetronomeOneTime = 3;
-    //             RunMetronomeAfterTimes = 3;
-    //             document.getElementById("TimeSignatureBottomValue").value = 4;
-    //         } else if (RunMetronomeOneTime == 16 || RunMetronomeOneTime == 8) {
-    //             RunMetronomeOneTime = 3
-    //             RunMetronomeAfterTimes = 3
-    //         } else {
-    //             RunMetronomeOneTime = 12 / RunMetronomeOneTime;
-    //             RunMetronomeAfterTimes = 12 / RunMetronomeAfterTimes;
-    //         }
-    //         break;
-
-    //     default:
-    //         break;
-    // }
-
     TheMainValue = localStorage.getItem("TheMainValue")
 
     bpm = document.getElementById("BpmValue").value;
@@ -171,8 +122,6 @@ function StartVideo() {
         }
     }
 
-    // changeMetronomeInterval(bpm, RunMetronomeAfterTimes);
-
     let isMetronomeChecked = document.getElementById("metronomeSound").checked;
     if (isMetronomeChecked) {
         metronomeSound = true;
@@ -215,7 +164,9 @@ function StartVideo() {
         }
     })
     CutArr = NumberOfBeatArr
+
     Metronome.start();
+
     localStorage.setItem("Metronome", "Start")
 }
 
@@ -836,7 +787,6 @@ function StopSounding(StoreSound) {
 
 
 const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
-
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
         document.getElementById("BtnWithVideo").style.display = "block"
