@@ -165,25 +165,16 @@ function StartVideo() {
         }
     })
     CutArr = NumberOfBeatArr
-    // console.log(MetronomeClickArr);
-    if(PreviewAudioPlay){
-        PreviewAudioMetronome.start();
-    }else{
-        Metronome.start();
-    }
 
-    console.log(PreviewAudioPlay);
+    Metronome.start();
+
     localStorage.setItem("Metronome", "Start")
 }
 
 function PlayVideo() {
     if (!localStorage.getItem("Metronome")) {
 
-        if(PreviewAudioPlay){
-            PreviewAudioMetronome.start();
-        }else{
-            Metronome.start();
-        }
+        Metronome.start();
         localStorage.setItem("Metronome", "Start")
     }
     // PlayVideo.style.display = "none"
@@ -191,11 +182,7 @@ function PlayVideo() {
 }
 
 function PauseVideo() {
-    if(PreviewAudioPlay){
-        PreviewAudioMetronome.stop();
-    }else{
-        Metronome.stop();
-    }
+    Metronome.stop();
     localStorage.removeItem("Metronome")
     try {
         // let up = document.getElementById(`${CurrentChord}-default-up.wav`).pause()
@@ -340,12 +327,7 @@ function changeMetronomeInterval(bpm, speed) {
             SetUpSpeed = 2
             break;
     }
-
-    if(PreviewAudioPlay){
-        PreviewAudioMetronome.timeInterval = 60000 / (bpm * SetUpSpeed)
-    }else{
-        Metronome.timeInterval = 60000 / (bpm * SetUpSpeed)
-    }
+    Metronome.timeInterval = 60000 / (bpm * SetUpSpeed)
 }
 
 function CheckMetronomeOn() {
@@ -476,26 +458,18 @@ function StrummingPattern(pattern, chord, number) {
     }
     DownOrUp = pattern
 
-    
-
     try {
         if (number == 0) {
-            if(!PreviewAudioPlay){
-        
-                PlayCHordsVideo(chord)
-            }
+            PlayCHordsVideo(chord)
         } else {
 
             let APreviousPattern = StrummingPatternArr[number + 1][1]
             if (APreviousPattern != "Empty") {
-                if(!PreviewAudioPlay){
-        
-                    PlayCHordsVideo(APreviousPattern)
-                }
+                PlayCHordsVideo(APreviousPattern)
             }
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 
     if (chord == "Empty" || chord == "No" || chord == "NC-muted" || chord == CurrentChord) {
@@ -507,30 +481,20 @@ function StrummingPattern(pattern, chord, number) {
     } else {
 
         try {
-            if(!PreviewAudioPlay){
-        
-                let ChordVideo = document.getElementById(`${chord}-${VideoType}.mp4`);
-                ChordVideo.currentTime = 2
-            }
+            let ChordVideo = document.getElementById(`${chord}-${VideoType}.mp4`);
+            ChordVideo.currentTime = 2
 
         } catch (error) {
-            console.log(error);
+
         }
 
         try {
 
-            if(!PreviewAudioPlay){
-                document.getElementById(`${CurrentChord}.png`).style.display = "none"
-        
-            }
+            document.getElementById(`${CurrentChord}.png`).style.display = "none"
         } catch (error) {
-            console.log(error);
 
         }
-        if(!PreviewAudioPlay){
-            document.getElementById(`${chord}.png`).style.display = "block"
-        
-        }
+        document.getElementById(`${chord}.png`).style.display = "block"
 
         CurrentChord = chord;
         ChordRun = true;
@@ -628,159 +592,6 @@ function playClickMetronome() {
         //     count++
         // }
         
-        if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
-            CheckMetronomeOn()
-            if (metronomeSound) {
-                if (count == beatsPerMeasure) {
-                    count = 0;
-                }
-                const click1 = document.getElementById("Click1.wav")
-                const click2 = document.getElementById("Click2.wav")
-                if (count == 0) {
-                    click1.play();
-                    click1.currentTime = 0;
-                } else {
-                    click2.play();
-                    click2.currentTime = 0;
-                }
-
-                count++
-            }
-        }
-
-
-        try {
-
-            if (isNCMuted) {
-                console.log(`Stop Sounds`);
-
-                StopSounding(StoreSound)
-                isNCMuted = false;
-            }
-            if (StoreSound) {
-                if (CurrentChord == StoreSound) {
-                } else {
-                    console.log(`Stop Sounds`);
-
-                    StopSounding(StoreSound)
-                }
-
-            }
-            StoreSound = CurrentChord
-
-        } catch (error) {
-            console.log(error);
-        }
-
-
-        BeatIncreaseNumber++
-
-        countArrOfPattern++
-
-
-    } catch (error) {
-        console.log(error);
-    }
-
-    if (document.getElementById("TimeSignatureBottomValue").value == 4) {
-
-        switch (MetronomeSpeedArr[BeatIncreaseNumber - 1]) {
-            case "Default":
-                changeMetronomeInterval(bpm, 2);
-                break;
-            case "Shuffle":
-                changeMetronomeInterval(bpm, 3);
-
-                break;
-            case "16ths":
-                changeMetronomeInterval(bpm, 4);
-                break;
-
-            default:
-                break;
-        }
-    } else {
-        switch (MetronomeSpeedArr[BeatIncreaseNumber - 1]) {
-            case "Default":
-                changeMetronomeInterval(bpm, 2);
-                break;
-            case "Shuffle":
-                changeMetronomeInterval(bpm, 6);
-
-                break;
-            case "16ths":
-                changeMetronomeInterval(bpm, 4);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-
-}
-
-
-function PreviewAudioMetronomeOnly() {
-
-
-    try {
-
-        SetUpAudio(countArrOfPattern)
-
-
-        if (DownOrUp == "D") {
-
-            sound = document.getElementById(`${AudioIntensity[countArrOfPattern]}`);
-            // console.log(sound);
-            // console.log(sound);
-            // video = HandDown
-            // HandDown.style.display = "inline-block"
-            // HandUp.style.display = "none"
-
-        } else if (DownOrUp == "U") {
-
-            sound = document.getElementById(`${AudioIntensity[countArrOfPattern]}`);
-            // console.log(sound);
-            // video = HandUp
-            // HandDown.style.display = "none"
-            // HandUp.style.display = "inline-block"
-        }
-
-
-
-        if (DownOrUp == "E") {
-            // try {
-            //     if (StoreStroke == "D" && StrummingPatternArr[countArrOfPattern + 1][0] == "D") {
-            //         video = HandUp
-            //         HandDown.style.display = "none"
-            //         HandUp.style.display = "inline-block"
-            //     }
-
-            //     if (StoreStroke == "U" && StrummingPatternArr[countArrOfPattern + 1][0] == "U") {
-            //         video = HandDown
-            //         HandDown.style.display = "inline-block"
-            //         HandUp.style.display = "none"
-            //     }
-
-
-            // } catch (error) {
-
-            // }
-
-
-
-
-        } else {
-
-            StoreStroke = DownOrUp
-            // video.src = video.getAttribute("src")
-
-            sound.play()
-            sound.currentTime = 0;
-
-        }
-
         if (MetronomeClickArr[BeatIncreaseNumber] == "Beat") {
             CheckMetronomeOn()
             if (metronomeSound) {
@@ -999,7 +810,6 @@ function StopSounding(StoreSound) {
 
 
 const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
-const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
         document.getElementById("BtnWithVideo").style.display = "block"

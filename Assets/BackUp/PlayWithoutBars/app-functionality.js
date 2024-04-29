@@ -15,12 +15,10 @@ let MetronomeSpeedArr = []
 let showSections = true
 let IsSplit = false
 let RandomRightHandVideo = ""
-let BarStartFrom = 0
-let BarHTMLContentArr = ""
-let PreviewAudioPlay = false
+
 auto();
-// var API = "http://localhost:3000"
-var API = "https://strummingmagician.com"
+var API = "http://localhost:3000"
+// var API = "https://strummingmagician.com"
 
 function auto() {
     let logo = document.getElementById("loading-image");
@@ -731,8 +729,6 @@ function AddthisPattern() {
     document.getElementById("AdvancedModeExit").style.display = "none"
     document.getElementById("PlayPauseVideo").style.display = "none"
     document.getElementById("RestartVideo").style.display = "none"
-
-    CheckRequiresFilesDownload()
 }
 
 function DisplayStrummingPattern() {
@@ -752,42 +748,12 @@ function DisplayStrummingPattern() {
 
     SetPatternNumber = 0
     SetChordNumber = 0
+    let DisplayPatternData = document.getElementById("DisplayPatternData")
+    DisplayPatternData.innerHTML = ``
 
-    // let DisplayPatternData = document.getElementById("DisplayPatternData")
-    BarHTMLContentArr = CreateDisplayPattern(StrummingPatternArr, "default")
-    // let content = ""
-    // BarStartFrom = 10
-    // let BarEndTo = BarStartFrom + 10
-    // BarHTMLContentArr.map(function (val, index) {
-    //     if(BarStartFrom<=index && index<BarEndTo){
-    //         content+=BarHTMLContentArr[index]
-    //     }
-    // })
+    let HTMLContent = CreateDisplayPattern(StrummingPatternArr, "default")
+    console.log(HTMLContent);
 
-    // DisplayPatternData.innerHTML = content
-    // DisplayPatternData.innerHTML = CreateDisplayPattern(StrummingPatternArr, "default")
-    console.log(BarHTMLContentArr.length);
-    BarStartFrom = roundToNextTen(BarHTMLContentArr.length) -10;
-    ShowPagintion()
-    ShowPagintionBtns()
-    AutoShowPattern(StrummingPatternArr)
-    // StorePredeafultIntensity("always")
-    ShowGenerateBtn()
-    document.getElementById("loading").style.display = "none"
-    DisplayEle("NewSectionBtn", "inline-block")
-    DisplayEle("TransposeKeyBtn", "inline-block")
-    $('.select-chords-search').select2({
-        tags: false,
-        matcher: matchCustom
-    });
-    if (showSections) {
-        ShowSectionNameOnBar()
-    }
-
-    // For playwithout bars
-
-    // let HTMLContent = CreateDisplayPattern(StrummingPatternArr, "default")
-    // console.log(HTMLContent);
     // AutoShowPattern(StrummingPatternArr)
     // ShowGenerateBtn()
     // document.getElementById("loading").style.display = "none"
@@ -803,56 +769,10 @@ function DisplayStrummingPattern() {
 
 }
 
-function AdvancedStrummingPattern() {
-    document.getElementById("DiagramsContainer").innerHTML = ""
-
-    document.getElementById("loading").style.display = "block"
-    let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-
-    if (!StrummingPatternArr) {
-        document.getElementById("loading").style.display = "none"
-
-        return console.log(`No data`);
-    }
-
-    StrummingPatternArr = JSON.parse(StrummingPatternArr);
-    StrummingPatternArr = Object.values(StrummingPatternArr);
-
-    SetPatternNumber = 0
-    SetChordNumber = 0
-    
-    // let DisplayPatternData = document.getElementById("DisplayPatternData")
-    // DisplayPatternData.innerHTML = ``
-
-    // DisplayPatternData.innerHTML = CreateDisplayPattern(StrummingPatternArr, "advanced")
-
-    BarHTMLContentArr = CreateDisplayPattern(StrummingPatternArr, "advanced")
-
-    ShowPagintion()
-    ShowPagintionBtns()
-    AutoShowPattern(StrummingPatternArr)
-    StorePredeafultIntensity()
-    InstensitySetOnDOM()
-    // InstensitySetOnDOM()
-    // InstensitySetOnStorage()
-    // InstensitySetOnDOM()
-    ShowGenerateBtn()
-    document.getElementById("loading").style.display = "none"
-
-    $('.select-chords-search').select2({
-        tags: false,
-        matcher: matchCustom
-    });
-    if (showSections) {
-        ShowSectionNameOnBar()
-    }
-
-}
-
 
 function CreateDisplayPattern(StrummingPatternArr, def) {
     let appendData = ""
-    let EveryBoxNumber = 0, SinglePatternLength = 0
+    let JValue = 0, SinglePatternLength = 0
     IncrementPatternsNumber = 0
     BeatIdNumber = 0
 
@@ -868,7 +788,6 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
     MetronomeClickArr = []
     MetronomeSpeedArr = []
 
-    let BarHTMLContentArr = []
     for (let i = 0; i < ModeArr.length; i++) {
         let NumberOfBeat = document.getElementById("TimeSignatureTopValue").value
         let CutArr = []
@@ -906,7 +825,7 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
         SinglePatternLength = countPattern
         NumberOfBeatArr.push(SinglePatternLength)
 
-        let htmlData = `
+        appendData += `
 
         <div class="line"><div class="pattern-number" onclick="PlayBar(${i})">${i + 1}</div>
             <p id="Section${i}" class="SectionOnBarLine"></p>
@@ -964,30 +883,25 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
             </div>
 
             </div>
-            <div id="Display-pattern-intensity${i + 1}" class="container mt-3" ${(def == "default") ? 'style="display:none"' : 'style="display:block"'}>${(loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength))}</div>
+            <div id="Display-pattern-intensity${i + 1}" class="container mt-3" ${(def == "default") ? 'style="display:none"' : 'style="display:block"'}>${(loop1(StrummingPatternArr, def, JValue, SinglePatternLength))}</div>
             <div id="Display-pattern-number${i + 1}" class="container mt-2">${BarsPatternNumberLoop(i, SinglePatternLength)}</div>
             <div id="Display-pattern-upper${i + 1}" class="container mt-2">${loop2(i, SinglePatternLength)}</div>
             <div id="Display-pattern-lower${i + 1}" class="container mt-3">${loop3(i, SinglePatternLength)}</div>
         </div>`
-        appendData += htmlData
-
-        BarHTMLContentArr.push(htmlData)
 
     }
-    return BarHTMLContentArr
+    return appendData
+
 }
 
 
-function loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength) {
-    
+function loop1(StrummingPatternArr, def, JValue, SinglePatternLength) {
+    // console.log(SinglePatternLength);
     let IntensityHtml = ""
     if (def == "default") {
         for (let j = 0; j < SinglePatternLength; j++) {
 
-            // EveryBoxNumber++
-            
             IncrementPatternsNumber++
-            // console.log(IncrementPatternsNumber);
             // console.log(StrummingPatternArr[IncrementPatternsNumber-1]);
             if (StrummingPatternArr[IncrementPatternsNumber - 1][0] == "E") {
                 IntensityHtml += `<div class="strumming-pattern-Display-Intensity">
@@ -1008,23 +922,21 @@ function loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength) {
     } else {
         for (let j = 0; j < SinglePatternLength; j++) {
 
-            // EveryBoxNumber++
+            // JValue++
             IncrementPatternsNumber++
 
             if (StrummingPatternArr[IncrementPatternsNumber - 1][0] == "E") {
                 IntensityHtml += `<div class="strumming-pattern-Display-Intensity IntensityDiv">
-                    <select class="strumming-pattern-select-Display IntensityStore SelectIntensityCheckBox" style="display:none" id="Intensity-${IncrementPatternsNumber}" >
+                    <select class="strumming-pattern-select-Display IntensityStore" style="display:none" id="" >
                         <option value="NoIntensity">NoIntensity</option>
                     </select>
-
-                
             </div>`
             } else {
 
                 if (StrummingPatternArr[IncrementPatternsNumber - 1][1] == "NC-muted") {
                     IntensityHtml += `<div class="strumming-pattern-Display IntensityDiv">
                     
-            <select class="strumming-pattern-select-Display Intensity IntensityStore" id="Intensity-${IncrementPatternsNumber}" onchange="InstensitySetOnStorage(this)">
+            <select class="strumming-pattern-select-Display Intensity IntensityStore" id="" onchange="InstensitySetOnStorage()">
                 <option value="default" selected>Def</option>
                 <option value="soft">Soft</option>
                 <option value="hard">Hard</option>
@@ -1038,7 +950,7 @@ function loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength) {
                     IntensityHtml += `
                     <div class="strumming-pattern-Display IntensityDiv">
 
-            <select class="strumming-pattern-select-Display Intensity IntensityStore" id="Intensity-${IncrementPatternsNumber}" onchange="InstensitySetOnStorage(this)">
+            <select class="strumming-pattern-select-Display Intensity IntensityStore" id="" onchange="InstensitySetOnStorage()">
                 <option value="default" selected>Def</option>
                 <option value="soft">Soft</option>
                 <option value="hard">Hard</option>
@@ -1630,70 +1542,69 @@ function Fn16thToShuffleby8(arr) {
     return N16Arr
 }
 
-function StorePredeafultIntensity(always){
 
-    let StoreIntensityArr = localStorage.getItem("StoreIntensityArr");
-    if(always!="always"){
-        
-        if (StoreIntensityArr != "") {
-            return
-        }
-    }
-    
-        
+
+
+
+
+function AdvancedStrummingPattern() {
+    document.getElementById("DiagramsContainer").innerHTML = ""
+
+    document.getElementById("loading").style.display = "block"
     let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-        
+
+    if (!StrummingPatternArr) {
+        document.getElementById("loading").style.display = "none"
+
+        return console.log(`No data`);
+    }
+
     StrummingPatternArr = JSON.parse(StrummingPatternArr);
     StrummingPatternArr = Object.values(StrummingPatternArr);
-    StoreIntensityArr = []
 
-    for (let i = 0; i < StrummingPatternArr.length; i++) {
-        if(StrummingPatternArr[i][0]=="E"){
-            StoreIntensityArr.push("NoIntensity")
-        }else{
-            StoreIntensityArr.push("default")
-        }
+    SetPatternNumber = 0
+    SetChordNumber = 0
+    let DisplayPatternData = document.getElementById("DisplayPatternData")
+    DisplayPatternData.innerHTML = ``
+
+    DisplayPatternData.innerHTML = CreateDisplayPattern(StrummingPatternArr, "advanced")
+
+    AutoShowPattern(StrummingPatternArr)
+    InstensitySetOnDOM()
+    InstensitySetOnStorage()
+    InstensitySetOnDOM()
+    ShowGenerateBtn()
+    document.getElementById("loading").style.display = "none"
+
+    $('.select-chords-search').select2({
+        tags: false,
+        matcher: matchCustom
+    });
+    if (showSections) {
+        ShowSectionNameOnBar()
     }
 
-    StoreIntensityArr = JSON.stringify(StoreIntensityArr);
-    localStorage.setItem("StoreIntensityArr", StoreIntensityArr);
 }
 
-function InstensitySetOnStorage(e) {
+function InstensitySetOnStorage() {
 
-    let CurrentIntensityValue = e.value
-
-    let BoxIndex = e.id;
-    BoxIndex = BoxIndex.split("-")[1];
-
-    let StoreIntensityArr = localStorage.getItem("StoreIntensityArr");
-
-    StoreIntensityArr = JSON.parse(StoreIntensityArr);
-    StoreIntensityArr = Object.values(StoreIntensityArr);
-
-    StoreIntensityArr[BoxIndex-1] = CurrentIntensityValue
-    
+    let IntensityArr = document.querySelectorAll(".IntensityStore");
+    let StoreIntensityArr = []
+    // console.log(IntensityArr);
+    for (let i = 0; i < IntensityArr.length; i++) {
+        StoreIntensityArr.push(IntensityArr[i].value)
+    }
+    // console.log(StoreIntensityArr);
     StoreIntensityArr = JSON.stringify(StoreIntensityArr);
     localStorage.setItem("StoreIntensityArr", StoreIntensityArr);
 
-    // let IntensityArr = document.querySelectorAll(".IntensityStore");
-    // // console.log(IntensityArr);
-    // for (let i = 0; i < IntensityArr.length; i++) {
-    //     StoreIntensityArr.push(IntensityArr[i].value)
-    // }
-    // // console.log(StoreIntensityArr);
-    // StoreIntensityArr = JSON.stringify(StoreIntensityArr);
-    // localStorage.setItem("StoreIntensityArr", StoreIntensityArr);
-
-    // // InstensitySetOnDOM()
+    InstensitySetOnDOM()
 
     document.getElementById("PlayPauseVideo").style.display = "none"
     document.getElementById("RestartVideo").style.display = "none"
     document.getElementById("StartVideo").style.display = "none"
 
     document.getElementById("GenerateVideo").style.display = "inline-block"
-
-    CheckRequiresFilesDownload()
 }
 
 function InstensitySetOnDOM() {
@@ -1706,41 +1617,27 @@ function InstensitySetOnDOM() {
     StoreIntensityArr = JSON.parse(StoreIntensityArr);
     StoreIntensityArr = Object.values(StoreIntensityArr);
 
-    for (let i = 0; i < StoreIntensityArr.length; i++) {
-        try {
-            document.getElementById(`Intensity-${i+1}`).value = StoreIntensityArr[i]
-            
-        } catch (error) {
-            
-        }
-        // IntensityArr[i].value = StoreIntensityArr[i]
-        // if (!StoreIntensityArr[i]) {
-        //     IntensityArr[i].value = "default"
+    let IntensityArr = document.querySelectorAll(".IntensityStore");
 
-        // }
+    for (let i = 0; i < IntensityArr.length; i++) {
+        IntensityArr[i].value = StoreIntensityArr[i]
+        if (!StoreIntensityArr[i]) {
+            IntensityArr[i].value = "default"
+
+        }
     }
 
 }
 
-function AutoShowPattern() {
-
-    let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-
-    StrummingPatternArr = JSON.parse(StrummingPatternArr);
-    StrummingPatternArr = Object.values(StrummingPatternArr);
+function AutoShowPattern(StrummingPatternArr) {
 
     for (let i = 0; i < StrummingPatternArr.length; i++) {
 
         let patternData = document.getElementById(`pattern${i}`)
         let chordData = document.getElementById(`chord${i}`)
         // console.log(StrummingPatternArr[i][0]);
-        try {
-            
-            patternData.value = StrummingPatternArr[i][0]
-            chordData.value = StrummingPatternArr[i][1]
-        } catch (error) {
-            
-        }
+        patternData.value = StrummingPatternArr[i][0]
+        chordData.value = StrummingPatternArr[i][1]
 
     }
 }
@@ -1840,8 +1737,6 @@ function UpdateStrummingPattern(ele, index) {
         ShowOnDisplay()
 
     }
-
-    CheckRequiresFilesDownload()
 
 }
 
@@ -2277,20 +2172,18 @@ function ChangeMultipleIntensityValue() {
     }
 
     if (!SelectedValueArr.length) {
-        return alert(`Please Select Intensities to change.`);
+        return alert(`Please Select any bar`);
     }
-
 
     let selectedValue = document.getElementsByClassName("ChanheIntensitySelect")[0].value
 
     SelectedValueArr.map(function (val, index) {
-        // console.log(document.getElementById(`Intensity-${val+1}`));
-        document.getElementById(`Intensity-${val+1}`).value = selectedValue
-
-        let ele = document.getElementById(`Intensity-${val+1}`)
-        InstensitySetOnStorage(ele)
+        document.getElementsByClassName("Intensity")[val].value = selectedValue
     })
 
+
+
+    InstensitySetOnStorage()
     InstensitySetOnDOM()
 
     CancelIntensitySelect()
@@ -2879,7 +2772,6 @@ function removeDuplicates(arr) {
 }
 
 async function FetchFiles() {
-    PreviewAudioPlay = false
 
     let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
     StrummingPatternArr = JSON.parse(StrummingPatternArr);
@@ -2910,20 +2802,7 @@ async function FetchFiles() {
     // StrummingPatternArr = Object.values(StrummingPatternArr);
 
     let ChordsVideoArr = []
-    let StoreIntensityArr = localStorage.getItem("StoreIntensityArr");
 
-    // if (!StoreIntensityArr) {
-    //     document.getElementById("loading").style.display = "none"
-    //     return
-    // }
-    
-    if(isAdvancedMode){
-            console.log(`Adva`);
-            StoreIntensityArr = JSON.parse(StoreIntensityArr);
-            StoreIntensityArr = Object.values(StoreIntensityArr);
-    }else{
-            StoreIntensityArr = IntensityForDefaultMode()
-    }
 
     let count = 0
     let CurrentChordValue, PreviousChordValue
@@ -2949,60 +2828,56 @@ async function FetchFiles() {
 
         if (e[0] == "E") {
             AudioIntensity.push(`E`)
-            count++
         } else {
 
-            // if (e[0] == "U") {
+            if (e[0] == "U") {
 
-            //         AudioIntensity.push(`${CurrentChordValue}-default-up.wav`)
-            //         count++
+                    AudioIntensity.push(`${CurrentChordValue}-default-up.wav`)
+                    count++
 
-            //     } else {
-            //         AudioIntensity.push(`${CurrentChordValue}-default-down.wav`)
-            //         count++
-            //     }
+                } else {
+                    AudioIntensity.push(`${CurrentChordValue}-default-down.wav`)
+                    count++
+                }
                 
-            let IntensityValue = StoreIntensityArr[count]
-
+            // let IntensityValue = document.querySelectorAll(".Intensity")[count]
             // if (!document.querySelectorAll(".Intensity")[count]) {
             //     IntensityValue = "default"
             // } else {
             //     IntensityValue = IntensityValue.value
             // }
 
-            if (IntensityValue == "muted-full" || IntensityValue == "muted-half") {
+            // if (IntensityValue == "muted-full" || IntensityValue == "muted-half") {
 
-                AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}.wav`)
-                count++
-            } else if (IntensityValue == "NC") {
-                if (e[0] == "U") {
+            //     AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}.wav`)
+            //     count++
+            // } else if (IntensityValue == "NC") {
+            //     if (e[0] == "U") {
 
-                    AudioIntensity.push(`NC-muted-default-up.wav`)
-                } else {
-                    AudioIntensity.push(`NC-muted-default-down.wav`)
+            //         AudioIntensity.push(`NC-muted-default-up.wav`)
+            //     } else {
+            //         AudioIntensity.push(`NC-muted-default-down.wav`)
 
-                }
-                count++
-            } else {
-                if (e[0] == "U") {
+            //     }
+            //     count++
+            // } else {
+            //     if (e[0] == "U") {
 
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-up.wav`)
-                    count++
+            //         AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-up.wav`)
+            //         count++
 
-                } else {
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-down.wav`)
-                    count++
-                }
-            }
+            //     } else {
+            //         AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-down.wav`)
+            //         count++
+            //     }
+            // }
 
         }
 
     });
 
-    console.log(AudioIntensity);
+    // console.log(AudioIntensity);
     // console.log(ChordsVideoArr);
-    // return
-
 
     let DiagramsArr = []
     ChordsVideoArr.map((e) => {
@@ -3027,8 +2902,8 @@ async function FetchFiles() {
     let AudioArr = getChrodsFilesArr.ChordsAudioArray;
     let VideoArr = getChrodsFilesArr.ChordsVideoArray;
 
-    // console.log(AudioArr);
-    // console.log(VideoArr);
+    console.log(AudioArr);
+    console.log(VideoArr);
 
     await StroeFiles(AudioArr, VideoArr, DiagramsArr)
     await SetFilesToDisplay(AudioArr, VideoArr, DiagramsArr)
@@ -3885,7 +3760,7 @@ function AddNewSectionRange() {
         return alert("Please Enter Range to Proceed")
     }
 
-    if (RangeTo > BarHTMLContentArr.length) {
+    if (RangeTo > document.querySelectorAll(".pattern-number").length) {
         return alert("Range is Out of Patterns")
     }
 
@@ -3990,21 +3865,23 @@ function ShowSectionNameOnBar() {
 
         let id = SectionName[0]
 
-        try {
+        document.getElementById(`Section${id}`).innerHTML = SongSectionNames[i]
+        document.getElementById(`Section${id}`).style.display = "inline"
 
-        //     <svg xmlns="http://www.w3.org/2000/svg" onclick="PlaySection('${SongSectionNames[i]}')" style="margin-left: 10px;" width="20" height="20" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
-        //     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-        //     <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
-        // </svg>
-
-        // <svg xmlns="http://www.w3.org/2000/svg" onclick="MoveBartoThatNumber('${id}')" style="margin-left: 10px;" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-        //     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
-        // </svg>
+        // append section name
 
         let a = document.createElement("a")
         a.innerHTML = `${SongSectionNames[i]}
+        <svg xmlns="http://www.w3.org/2000/svg" onclick="PlaySection('${SongSectionNames[i]}')" style="margin-left: 10px;" width="20" height="20" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+        </svg>
 
         <img onclick="SplitSection('${SongSectionNames[i]}')" style="margin-left: 10px;" width="20" height="20" src="https://img.icons8.com/ios-glyphs/90/split.png" alt="split"/>
+
+        <svg xmlns="http://www.w3.org/2000/svg" onclick="MoveBartoThatNumber('${id}')" style="margin-left: 10px;" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+        </svg>
 
         <svg xmlns="http://www.w3.org/2000/svg" onclick="EditSectionName('${SongSectionNames[i]}')" style="margin-left: 10px;" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -4022,18 +3899,6 @@ function ShowSectionNameOnBar() {
         </svg>
         `
         container.appendChild(a)
-        
-            document.getElementById(`Section${id}`).innerHTML = SongSectionNames[i]
-        document.getElementById(`Section${id}`).style.display = "inline"
-
-        // append section name
-
-        
-        } catch (error) {
-            console.log(error);
-        }
-
-        
 
     }
 
@@ -4869,23 +4734,24 @@ function TransposePatterns(TransposeKeyValue) {
     StrummingPatternArr = JSON.parse(StrummingPatternArr);
     StrummingPatternArr = Object.values(StrummingPatternArr);
 
-    let ChordsName = StrummingPatternArr
+    let ChordsName = document.querySelectorAll(".UpdateChord")
     for (let i = 0; i < ChordsName.length; i++) {
-        if (ChordsName[i][1] != "Empty") {
+        if (ChordsName[i].value != "Empty") {
 
-            if (ChordsName[i][1] != "NC-muted") {
-                let Transposed = TransposeChordsName(ChordsName[i][1], UseTransposeArr)
-                ChordsName[i][1] = Transposed
+            if (ChordsName[i].value != "NC-muted") {
+
+                let Transposed = TransposeChordsName(ChordsName[i].value, UseTransposeArr)
+                document.querySelectorAll(".UpdateChord")[i].value = Transposed
+                StrummingPatternArr[i][1] = Transposed
             }
         }
 
     }
 
-    StrummingPatternArr = ChordsName
     StrummingPatternArr = JSON.stringify(StrummingPatternArr);
     localStorage.setItem("StrummingPatternArr", StrummingPatternArr);
 
-    ShowOnDisplay()
+    $('.select-chords-search').select2();
 }
 
 function TransposeChordsName(ChordName, TransposeArr) {
@@ -5095,7 +4961,7 @@ function SyncSongFromDatabase(){
     if(AppChrodsData){
         localStorage.setItem("AppChrodsData", AppChrodsData);
     }
-    
+
     localStorage.setItem("AdvancedMode", CurrentSongData.AdvancedMode)
     localStorage.setItem("BPM", CurrentSongData.BPM)
     localStorage.setItem("BeatArr", CurrentSongData.BeatArr)
@@ -5125,398 +4991,6 @@ function SyncSongFromDatabase(){
 
 
 }
-
-function PaginationNext(){
-    
-    if(BarStartFrom>BarHTMLContentArr.length){
-        return
-    }
-
-    BarStartFrom+=10
-    ShowPagintion()
-}
-
-function PaginationPrevious(){
-    BarStartFrom-=10
-
-    if(BarStartFrom<0){
-        BarStartFrom = 0
-    }
-
-    ShowPagintion()
-}
-
-function ShowPagintion(){
-    let DisplayPatternData = document.getElementById("DisplayPatternData")
-    let content = ""
-    let BarEndTo = BarStartFrom + 10
-
-    let NewAppendHtmlArr = BarHTMLContentArr.slice(BarStartFrom, BarEndTo);
-
-    if(NewAppendHtmlArr.length ==0 || BarStartFrom<0){
-        return
-    }
-
-    NewAppendHtmlArr.map(function (val, index) {
-        content+=val
-    })
-    
-    DisplayPatternData.innerHTML = content
-
-    AutoShowPattern()
-
-    if (showSections) {
-        ShowSectionNameOnBar()
-    }
-
-    if(AdvancedMode){
-        InstensitySetOnDOM()
-    }
-}
-
-function ShowPagintionBtns(){
-    if(BarHTMLContentArr.length>10){
-        document.getElementById("PaginationBtns").style.display = "block"
-    }
-    
-}
-
-async function CheckRequiresFilesDownload(){
-    let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-    StrummingPatternArr = JSON.parse(StrummingPatternArr);
-    StrummingPatternArr = Object.values(StrummingPatternArr);
-
-    let validate = ValidateStrummingPattern(StrummingPatternArr);
-    if (validate == "Not Possilbe") {
-        return 
-    }
-
-    let ChordsVideoArr = []
-    let StoreIntensityArr = localStorage.getItem("StoreIntensityArr");
-    // console.log(StoreIntensityArr);
-    // if (!StoreIntensityArr) {
-    //     document.getElementById("loading").style.display = "none"
-    //     return
-    // }
-    
-        if(isAdvancedMode){
-            console.log(`Adva`);
-            StoreIntensityArr = JSON.parse(StoreIntensityArr);
-            StoreIntensityArr = Object.values(StoreIntensityArr);
-        }else{
-            StoreIntensityArr = IntensityForDefaultMode()
-        }
-    // console.log(StoreIntensityArr);
-
-    if(!localStorage.getItem("StrummingPatternArrHold")){
-        await SyncSongData();
-    }
-
-    let count = 0
-    let CurrentChordValue, PreviousChordValue
-    AudioIntensity = []
-
-    StrummingPatternArr.map((e) => {
-        CurrentChordValue = e[1]
-
-        if (e[1] != "Empty") {
-            ChordsVideoArr.push(`${e[1]}`)
-
-            if (CurrentChordValue != "NC-muted") {
-                PreviousChordValue = CurrentChordValue
-            }
-
-        }
-
-        if (CurrentChordValue == "Empty") {
-            CurrentChordValue = PreviousChordValue
-        }
-
-        if (e[0] == "E") {
-            AudioIntensity.push(`E`)
-            count++
-        } else {
-
-            let IntensityValue = StoreIntensityArr[count]
-
-            if (IntensityValue == "muted-full" || IntensityValue == "muted-half") {
-
-                AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}.wav`)
-                count++
-            } else if (IntensityValue == "NC") {
-                if (e[0] == "U") {
-
-                    AudioIntensity.push(`NC-muted-default-up.wav`)
-                } else {
-                    AudioIntensity.push(`NC-muted-default-down.wav`)
-
-                }
-                count++
-            } else {
-                if (e[0] == "U") {
-
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-up.wav`)
-                    count++
-
-                } else {
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-down.wav`)
-                    count++
-                }
-            }
-
-        }
-
-    });
-
-    let getChrodsFilesArr = await fetch(`${API}/getChordsDataPremium`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "ChordsAudioArray": AudioIntensity,
-            "ChordsVideoArray": ChordsVideoArr,
-            "ChordsVideoType": VideoType
-        })
-    })
-    getChrodsFilesArr = await getChrodsFilesArr.json();
-
-    let AudioArr = getChrodsFilesArr.ChordsAudioArray;
-    let VideoArr = getChrodsFilesArr.ChordsVideoArray;
-
-    console.log(VideoArr);
-
-    await StroeAudioFilesOnly(AudioArr)
-}
-
-async function StroeAudioFilesOnly(AudioArr) {
-
-    let StoredFilesArr = localStorage.getItem("AppChrodsData")
-    if (StoredFilesArr) {
-        StoredFilesArr = JSON.parse(StoredFilesArr);
-        StoredFilesArr = Object.values(StoredFilesArr);
-    } else {
-        StoredFilesArr = []
-    }
-
-    AudioArr.push("Click1.wav")
-    AudioArr.push("Click2.wav")
-
-    var date = new Date();
-    let ID = `${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}`
-    for (let i = 0; i < AudioArr.length; i++) {
-        if (!StoredFilesArr.includes(AudioArr[i])) {
-
-            let response = await fetch(`${API}/files/${ID}/${AudioArr[i]}`)
-            let data = await response.blob()
-        }
-    }
-
-
-    for (let i = 0; i < AudioArr.length; i++) {
-        if (!StoredFilesArr.includes(AudioArr[i])) {
-
-            let response = await fetch(`${API}/DownloadFiles/${ID}/${AudioArr[i]}`)
-            let data = await response.blob()
-
-            const url = URL.createObjectURL(data);
-
-            let Saved = await InsertFileToDB(data, AudioArr[i], "audio/wav")
-            if (Saved != "Error") {
-
-                StoredFilesArr.push(AudioArr[i])
-            }
-
-        }
-    }
-
-
-    StoredFilesArr = JSON.stringify(StoredFilesArr);
-    localStorage.setItem("AppChrodsData", StoredFilesArr);
-
-    let response = await fetch(`${API}/delete/${ID}`)
-    let data = await response.text()
-    console.log(data);
-}
-
-async function PreviewAudioOnly() {
-    PreviewAudioPlay = true
-    let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-    StrummingPatternArr = JSON.parse(StrummingPatternArr);
-    StrummingPatternArr = Object.values(StrummingPatternArr);
-
-    let validate = ValidateStrummingPattern(StrummingPatternArr);
-    if (validate == "Not Possilbe") {
-        return alert(`Can't update due to some wrong Pattern`);
-    }
-
-    let logo = document.getElementById("loading-image");
-    logo.src = logo.getAttribute("src")
-    document.getElementById("loading").style.display = "block"
-
-    if(!localStorage.getItem("StrummingPatternArrHold")){
-        await SyncSongData();
-    }
-
-
-    document.getElementById("AudioSecion").innerHTML = ""
-    document.getElementById("ChordVideoSection").innerHTML = ""
-    document.getElementById("ChordHandVideoSection").innerHTML = ""
-    document.getElementById("DiagramsContainer").innerHTML = ""
-
-    let ChordsVideoArr = []
-    let StoreIntensityArr = localStorage.getItem("StoreIntensityArr");
-
-    // if (!StoreIntensityArr) {
-    // document.getElementById("loading").style.display = "none"
-    // return
-    // }
-
-    if(isAdvancedMode){
-        console.log(`Adva`);
-        StoreIntensityArr = JSON.parse(StoreIntensityArr);
-        StoreIntensityArr = Object.values(StoreIntensityArr);
-    }else{
-        StoreIntensityArr = IntensityForDefaultMode()
-    }
-
-    let count = 0
-    let CurrentChordValue, PreviousChordValue
-    AudioIntensity = []
-    StrummingPatternArr.map((e) => {
-        CurrentChordValue = e[1]
-
-        if (e[1] != "Empty") {
-            ChordsVideoArr.push(`${e[1]}`)
-
-            if (CurrentChordValue != "NC-muted") {
-                PreviousChordValue = CurrentChordValue
-            }
-
-        }
-
-        if (CurrentChordValue == "Empty") {
-            CurrentChordValue = PreviousChordValue
-        }
-
-        if (e[0] == "E") {
-            AudioIntensity.push(`E`)
-            count++
-        } else {
-
-            let IntensityValue = StoreIntensityArr[count]
-
-            if (IntensityValue == "muted-full" || IntensityValue == "muted-half") {
-
-                AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}.wav`)
-                count++
-            } else if (IntensityValue == "NC") {
-                if (e[0] == "U") {
-
-                    AudioIntensity.push(`NC-muted-default-up.wav`)
-                } else {
-                    AudioIntensity.push(`NC-muted-default-down.wav`)
-
-                }
-                count++
-            } else {
-                if (e[0] == "U") {
-
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-up.wav`)
-                    count++
-
-                } else {
-                    AudioIntensity.push(`${CurrentChordValue}-${IntensityValue}-down.wav`)
-                    count++
-                }
-            }
-
-        }
-
-    });
-
-    console.log(AudioIntensity);
-    // console.log(ChordsVideoArr);
-
-    // let DiagramsArr = []
-    // ChordsVideoArr.map((e) => {
-    //     DiagramsArr.push(`${e}.png`)
-    // })
-
-    // DiagramsArr = removeDuplicates(DiagramsArr)
-    let getChrodsFilesArr = await fetch(`${API}/getChordsDataPremium`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "ChordsAudioArray": AudioIntensity,
-            "ChordsVideoArray": ChordsVideoArr,
-            "ChordsVideoType": VideoType
-        })
-    })
-    getChrodsFilesArr = await getChrodsFilesArr.json();
-
-    let AudioArr = getChrodsFilesArr.ChordsAudioArray;
-    let VideoArr = getChrodsFilesArr.ChordsVideoArray;
-
-    console.log(AudioArr);
-    console.log(VideoArr);
-
-    await StroeAudioFilesOnly(AudioArr)
-    await SetAudioFilesToDisplay(AudioArr)
-
-    console.log(`Ready to preview Audio`);
-
-    document.getElementById("GenerateVideo").innerHTML = "Update Video"
-    document.getElementById("GenerateVideo").style.display = "none"
-    document.getElementById("loading").style.display = "none"
-    IntensityArr = []
-    if (isAdvancedMode) {
-        document.getElementById("AdvancedMode").style.display = "none"
-    }
-    document.getElementById("StartVideo").style.display = "inline-block"
-
-}
-
-async function SetAudioFilesToDisplay(AudioArr) {
-    AudioArr.push("Click1.wav")
-    AudioArr.push("Click2.wav")
-
-    // For Audio
-    for (let i = 0; i < AudioArr.length; i++) {
-
-        const url = await FetchFileFromDB(AudioArr[i])
-        let container = document.getElementById("AudioSecion");
-        container.innerHTML += `<audio src="${url}" id="${AudioArr[i]}"></audio>`
-    }
-
-}
-
-function roundToNextTen(num) {
-    return Math.ceil(num / 10) * 10;
-  }
-
-function IntensityForDefaultMode(){
-    let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
-        
-    StrummingPatternArr = JSON.parse(StrummingPatternArr);
-    StrummingPatternArr = Object.values(StrummingPatternArr);
-    let StoreIntensityArr = []
-
-    for (let i = 0; i < StrummingPatternArr.length; i++) {
-        if(StrummingPatternArr[i][0]=="E"){
-            StoreIntensityArr.push("NoIntensity")
-        }else{
-            StoreIntensityArr.push("default")
-        }
-    }
-
-    return StoreIntensityArr
-}
-
 
 // $('.select-chords-search').on('select2:open', function (e) {
 //     // let ele = e.currentTarget

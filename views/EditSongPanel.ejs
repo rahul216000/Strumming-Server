@@ -208,9 +208,16 @@
         <div class="container mt-3 scroll" id="DisplayPatternData">
         </div>
         <!-- BtnWithVideo -->
-        <div id="BtnWithVideo" style="display: none;">
+        <div id="BtnWithVideo" class="container" style="display: none;">
 
             <!-- Generate Btn -->
+            <div class="mt-2" style="text-align: center; display: none;" id="PaginationBtns">
+                <button type="button" class="btn btn-outline-dark" onclick="PaginationPrevious()">Previous</button>
+                <button type="button" class="btn btn-outline-dark" onclick="PaginationNext()">Next</button>
+            </div>
+
+            
+
             <div class="container mt-3" style="text-align: right;">
                 <input type="radio" class="btn-check" name="VideoType" value="handmade" id="Handmade" autocomplete="off"
                     checked onclick="SetVideoType()" onchange="SetVideoType()">
@@ -222,15 +229,15 @@
 
             </div>
             <div class="container mt-3" style="text-align: center;" id="GenerateVideoContainer">
-                <button type="button" class="btn btn-outline-dark" id="GenerateVideo" onclick="FetchFiles()">Generate
-                    Video</button>
+                <button type="button" class="btn btn-outline-dark" id="GenerateVideo" onclick="FetchFiles()">Generate Video</button>
+                <button type="button" class="btn btn-outline-dark" id="PreviewAudioOnlyID" onclick="PreviewAudioOnly()">Preview Audio</button>
                 <button type="button" class="btn btn-outline-dark" id="AdvancedMode"
                     onclick="AdvancedMode()">AdvancedMode</button>
                 <!-- <button type="button" class="btn btn-outline-dark" id="AdvancedModeApply" onclick="AdvancedModeApply()" style="display: none;">Apply</button> -->
                 <button type="button" class="btn btn-outline-dark" id="AdvancedModeExit" onclick="AdvancedModeExit()"
                     style="display: none;">Exit</button>
                 <button type="button" class="btn btn-outline-dark" onclick="StartVideo()" id="StartVideo"
-                    style="display: none;">Start Video</button>
+                    style="display: none;">Start</button>
 
                 <button type="button" class="btn btn-outline-dark" style="display: none;"
                     id="PlayPauseVideo">Pause</button>
