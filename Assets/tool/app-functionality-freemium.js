@@ -3,7 +3,7 @@ let BarsVisible = false, IntensitySelectVisible = false;
 let TheMainValue, DefaultTimeSign;
 let AudioIntensity = []
 let isAdvancedMode = false
-let VideoType = "handmade"
+let VideoType = "animated"
 let SetPatternNumber = 0
 let SetChordNumber = 0
 let IncrementPatternsNumber = 0
@@ -2919,7 +2919,7 @@ async function SetFilesToDisplay(AudioArr, VideoArr, DiagramsArr) {
     AudioArr.push("Click1.wav")
     AudioArr.push("Click2.wav")
 
-    let LeftHandVideo = [`HandUp-${VideoType}-default${RandomRightHandVideo}.gif`, `HandDown-${VideoType}-default${RandomRightHandVideo}.gif`]
+    let LeftHandVideo = [`HandUp-${VideoType}-default.gif`, `HandDown-${VideoType}-default.gif`]
 
     // For Audio
     for (let i = 0; i < AudioArr.length; i++) {
