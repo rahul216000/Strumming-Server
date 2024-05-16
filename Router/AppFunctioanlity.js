@@ -30,8 +30,6 @@ router.get('/files/:ID/:FileName', async (req, res) => {
     res.send("Files Downloaded")
 });
 
-
-
 router.get('/DownloadFiles/:ID/:FileName', (req, res) => {
     let FileName = req.params["FileName"]
     let ID = req.params["ID"]

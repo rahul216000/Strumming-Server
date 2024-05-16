@@ -19,8 +19,8 @@ let BarStartFrom = 0
 let BarHTMLContentArr = ""
 let PreviewAudioPlay = false
 auto();
-
 var API = ""
+// var API = "https://strummingmagician.com"
 
 function auto() {
     let logo = document.getElementById("loading-image");
@@ -434,141 +434,62 @@ function CreatePatternBoxes() {
         <option value="Am" >Am</option>
         <option value="A7" >A7</option>
         <option value="Am7" >Am7</option>
-        <option value="Amaj7" >Amaj7</option>
-        <option value="Am7b5" >Am7b5</option>
-        <option value="Adim" >Adim</option>
-        <option value="Asus2" >Asus2</option>
-        <option value="Asus4" >Asus4</option>
-        <option value="A7sus4" >A7sus4</option>
 
         <option value="B" >B</option>
         <option value="Bm" >Bm</option>
         <option value="B7" >B7</option>
         <option value="Bm7" >Bm7</option>
-        <option value="Bmaj7" >Bmaj7</option>
-        <option value="Bm7b5" >Bm7b5</option>
-        <option value="Bdim" >Bdim</option>
-        <option value="Bsus2" >Bsus2</option>
-        <option value="Bsus4" >Bsus4</option>
-        <option value="B7sus4" >B7sus4</option>
 
         <option value="Bb">Bb (A#)</option>
         <option value="Bbm" >Bbm (A#m)</option>
         <option value="Bb7" >Bb7 (A#7)</option>
         <option value="Bbm7" >Bbm7 (A#m7)</option>
-        <option value="Bbmaj7" >Bbmaj7 (A#maj7)</option>
-        <option value="Bbm7b5" >Bbm7b5 (A#m7b5)</option>
-        <option value="Bbdim" >Bbdim</option>
-        <option value="Bbsus2" >Bbsus2</option>
-        <option value="Bbsus4" >Bbsus4</option>
-        <option value="Bb7sus4" >Bb7sus4</option>
-
        
         <option value="C" >C</option>
         <option value="Cm" >Cm</option>
         <option value="C7" >C7</option>
         <option value="Cm7" >Cm7</option>
-        <option value="Cmaj7" >Cmaj7</option>
-        <option value="Cm7b5" >Cm7b5</option>
-        <option value="Cdim" >Cdim</option>
-        <option value="Csus2" >Csus2</option>
-        <option value="Csus4" >Csus4</option>
-        <option value="C7sus4" >C7sus4</option>
-
 
         <option value="D" >D</option>
         <option value="Dm" >Dm</option>
         <option value="D7" >D7</option>
         <option value="Dm7" >Dm7</option>
-        <option value="Dmaj7" >Dmaj7</option>
-        <option value="Dm7b5" >Dm7b5</option>
-        <option value="Ddim" >Ddim</option>
-        <option value="Dsus2" >Dsus2</option>
-        <option value="Dsus4" >Dsus4</option>
-        <option value="D7sus4" >D7sus4</option>
-
 
         <option value="Db" >C# (Db)</option>
         <option value="Dbm" >C#m (Dbm)</option>
         <option value="Db7" >C#7 (Db7)</option>
         <option value="Dbm7" >C#m7 (Dbm7)</option>
-        <option value="Dbmaj7" >C#maj7 (Dbmaj7)</option>
-        <option value="Dbm7b5" >C#m7b5 (Dbm7b5)</option>
-        <option value="Dbdim" >Dbdim</option>
-        <option value="Dbsus2" >Dbsus2</option>
-        <option value="Dbsus4" >Dbsus4</option>
-        <option value="Db7sus4" >Db7sus4</option>
 
         <option value="E" >E</option>
         <option value="Em" >Em</option>
         <option value="E7" >E7</option>
         <option value="Em7" >Em7</option>
-        <option value="Emaj7" >Emaj7</option>
-        <option value="Em7b5" >Em7b5</option>
-        <option value="Edim" >Edim</option>
-        <option value="Esus2" >Esus2</option>
-        <option value="Esus4" >Esus4</option>
-        <option value="E7sus4" >E7sus4</option>
 
         <option value="Eb" >Eb (D#)</option>
         <option value="Ebm" >D#m (Ebm)</option>
         <option value="Eb7" >D#7 (Eb7)</option>
         <option value="Ebm7" >D#m7 (Ebm7)</option>
-        <option value="Ebmaj7" >D#maj7 (Ebmaj7)</option>
-        <option value="Ebm7b5" >D#m7b5 (Ebm7b5)</option>
-        <option value="Ebdim" >Ebdim</option>
-        <option value="Ebsus2" >Ebsus2</option>
-        <option value="Ebsus4" >Ebsus4</option>
-        <option value="Eb7sus4" >Eb7sus4</option>
-
     
 
         <option value="F" >F</option>
         <option value="Fm" >Fm</option>
         <option value="F7" >F7</option>
         <option value="Fm7" >Fm7</option>
-        <option value="Fmaj7" >Fmaj7</option>
-        <option value="Fm7b5" >Fm7b5</option>
-        <option value="Fdim" >Fdim</option>
-        <option value="Fsus2" >Fsus2</option>
-        <option value="Fsus4" >Fsus4</option>
-        <option value="F7sus4" >F7sus4</option>
-
 
         <option value="G" >G</option>
         <option value="Gm" >Gm</option>
         <option value="G7" >G7</option>
         <option value="Gm7" >Gm7</option>
-        <option value="Gmaj7" >Gmaj7</option>
-        <option value="Gm7b5" >Gm7b5</option>
-        <option value="Gdim" >Gdim</option>
-        <option value="Gsus2" >Gsus2</option>
-        <option value="Gsus4" >Gsus4</option>
-        <option value="G7sus4" >G7sus4</option>
-
 
         <option value="Gb" >F# (Gb)</option>
         <option value="Gbm" >F#m (Gbm)</option>
         <option value="Gb7" >F#7 (Gb7)</option>
         <option value="Gbm7" >F#m7 (Gbm7)</option>
-        <option value="Gbmaj7" >F#maj7 (Gbmaj7)</option>
-        <option value="Gbm7b5" >F#m7b5 (Gbm7b5)</option>
-        <option value="Gbdim" >Gbdim</option>
-        <option value="Gbsus2" >Gbsus2</option>
-        <option value="Gbsus4" >Gbsus4</option>
-        <option value="Gb7sus4" >Gb7sus4</option>
-
 
         <option value="Ab" >Ab (G#)</option>
         <option value="Abm" >Abm (G#m)</option>
         <option value="Ab7" >Ab7 (G#7)</option>
         <option value="Abm7" >Abm7 (G#m7)</option>
-        <option value="Abmaj7" >Abmaj7 (G#maj7)</option>
-        <option value="Abm7b5" >Abm7b5 (G#m7b5)</option>
-        <option value="Abdim" >Abdim</option>
-        <option value="Absus2" >Absus2</option>
-        <option value="Absus4" >Absus4</option>
-        <option value="Ab7sus4" >Ab7sus4</option>
 
         </select>
         </div>`
@@ -1233,142 +1154,62 @@ function loop3(i, SinglePatternLength) {
         <option value="Am" >Am</option>
         <option value="A7" >A7</option>
         <option value="Am7" >Am7</option>
-        <option value="Amaj7" >Amaj7</option>
-        <option value="Am7b5" >Am7b5</option>
-        <option value="Adim" >Adim</option>
-        <option value="Asus2" >Asus2</option>
-        <option value="Asus4" >Asus4</option>
-        <option value="A7sus4" >A7sus4</option>
 
         <option value="B" >B</option>
         <option value="Bm" >Bm</option>
         <option value="B7" >B7</option>
         <option value="Bm7" >Bm7</option>
-        <option value="Bmaj7" >Bmaj7</option>
-        <option value="Bm7b5" >Bm7b5</option>
-        <option value="Bdim" >Bdim</option>
-        <option value="Bsus2" >Bsus2</option>
-        <option value="Bsus4" >Bsus4</option>
-        <option value="B7sus4" >B7sus4</option>
 
         <option value="Bb">Bb (A#)</option>
         <option value="Bbm" >Bbm (A#m)</option>
         <option value="Bb7" >Bb7 (A#7)</option>
         <option value="Bbm7" >Bbm7 (A#m7)</option>
-        <option value="Bbmaj7" >Bbmaj7 (A#maj7)</option>
-        <option value="Bbm7b5" >Bbm7b5 (A#m7b5)</option>
-        <option value="Bbdim" >Bbdim</option>
-        <option value="Bbsus2" >Bbsus2</option>
-        <option value="Bbsus4" >Bbsus4</option>
-        <option value="Bb7sus4" >Bb7sus4</option>
-
        
         <option value="C" >C</option>
         <option value="Cm" >Cm</option>
         <option value="C7" >C7</option>
         <option value="Cm7" >Cm7</option>
-        <option value="Cmaj7" >Cmaj7</option>
-        <option value="Cm7b5" >Cm7b5</option>
-        <option value="Cdim" >Cdim</option>
-        <option value="Csus2" >Csus2</option>
-        <option value="Csus4" >Csus4</option>
-        <option value="C7sus4" >C7sus4</option>
-
 
         <option value="D" >D</option>
         <option value="Dm" >Dm</option>
         <option value="D7" >D7</option>
         <option value="Dm7" >Dm7</option>
-        <option value="Dmaj7" >Dmaj7</option>
-        <option value="Dm7b5" >Dm7b5</option>
-        <option value="Ddim" >Ddim</option>
-        <option value="Dsus2" >Dsus2</option>
-        <option value="Dsus4" >Dsus4</option>
-        <option value="D7sus4" >D7sus4</option>
-
 
         <option value="Db" >C# (Db)</option>
         <option value="Dbm" >C#m (Dbm)</option>
         <option value="Db7" >C#7 (Db7)</option>
         <option value="Dbm7" >C#m7 (Dbm7)</option>
-        <option value="Dbmaj7" >C#maj7 (Dbmaj7)</option>
-        <option value="Dbm7b5" >C#m7b5 (Dbm7b5)</option>
-        <option value="Dbdim" >Dbdim</option>
-        <option value="Dbsus2" >Dbsus2</option>
-        <option value="Dbsus4" >Dbsus4</option>
-        <option value="Db7sus4" >Db7sus4</option>
 
         <option value="E" >E</option>
         <option value="Em" >Em</option>
         <option value="E7" >E7</option>
         <option value="Em7" >Em7</option>
-        <option value="Emaj7" >Emaj7</option>
-        <option value="Em7b5" >Em7b5</option>
-        <option value="Edim" >Edim</option>
-        <option value="Esus2" >Esus2</option>
-        <option value="Esus4" >Esus4</option>
-        <option value="E7sus4" >E7sus4</option>
 
         <option value="Eb" >Eb (D#)</option>
         <option value="Ebm" >D#m (Ebm)</option>
         <option value="Eb7" >D#7 (Eb7)</option>
         <option value="Ebm7" >D#m7 (Ebm7)</option>
-        <option value="Ebmaj7" >D#maj7 (Ebmaj7)</option>
-        <option value="Ebm7b5" >D#m7b5 (Ebm7b5)</option>
-        <option value="Ebdim" >Ebdim</option>
-        <option value="Ebsus2" >Ebsus2</option>
-        <option value="Ebsus4" >Ebsus4</option>
-        <option value="Eb7sus4" >Eb7sus4</option>
-
     
 
         <option value="F" >F</option>
         <option value="Fm" >Fm</option>
         <option value="F7" >F7</option>
         <option value="Fm7" >Fm7</option>
-        <option value="Fmaj7" >Fmaj7</option>
-        <option value="Fm7b5" >Fm7b5</option>
-        <option value="Fdim" >Fdim</option>
-        <option value="Fsus2" >Fsus2</option>
-        <option value="Fsus4" >Fsus4</option>
-        <option value="F7sus4" >F7sus4</option>
-
 
         <option value="G" >G</option>
         <option value="Gm" >Gm</option>
         <option value="G7" >G7</option>
         <option value="Gm7" >Gm7</option>
-        <option value="Gmaj7" >Gmaj7</option>
-        <option value="Gm7b5" >Gm7b5</option>
-        <option value="Gdim" >Gdim</option>
-        <option value="Gsus2" >Gsus2</option>
-        <option value="Gsus4" >Gsus4</option>
-        <option value="G7sus4" >G7sus4</option>
-
 
         <option value="Gb" >F# (Gb)</option>
         <option value="Gbm" >F#m (Gbm)</option>
         <option value="Gb7" >F#7 (Gb7)</option>
         <option value="Gbm7" >F#m7 (Gbm7)</option>
-        <option value="Gbmaj7" >F#maj7 (Gbmaj7)</option>
-        <option value="Gbm7b5" >F#m7b5 (Gbm7b5)</option>
-        <option value="Gbdim" >Gbdim</option>
-        <option value="Gbsus2" >Gbsus2</option>
-        <option value="Gbsus4" >Gbsus4</option>
-        <option value="Gb7sus4" >Gb7sus4</option>
-
 
         <option value="Ab" >Ab (G#)</option>
         <option value="Abm" >Abm (G#m)</option>
         <option value="Ab7" >Ab7 (G#7)</option>
         <option value="Abm7" >Abm7 (G#m7)</option>
-        <option value="Abmaj7" >Abmaj7 (G#maj7)</option>
-        <option value="Abm7b5" >Abm7b5 (G#m7b5)</option>
-        <option value="Abdim" >Abdim</option>
-        <option value="Absus2" >Absus2</option>
-        <option value="Absus4" >Absus4</option>
-        <option value="Ab7sus4" >Ab7sus4</option>
-
 
     </select>
     </div>`
@@ -5110,13 +4951,8 @@ function SyncSongFromDatabase(){
         localStorage.setItem("AppChrodsData", AppChrodsData);
     }
 
-    if(CurrentSongData.AdvancedMode=="true"){
-        isAdvancedMode = true
-    }else{
-        isAdvancedMode = false
-    }
     
-    localStorage.setItem("AdvancedMode", CurrentSongData.AdvancedMode)
+    // localStorage.setItem("AdvancedMode", CurrentSongData.AdvancedMode)
     localStorage.setItem("BPM", CurrentSongData.BPM)
     localStorage.setItem("BeatArr", CurrentSongData.BeatArr)
     localStorage.setItem("DefaultTimeSign", CurrentSongData.DefaultTimeSign)

@@ -166,9 +166,10 @@ router.get("/dashboard", verifyToken, verifiedUserEmail, async (req, res) => {
 async function SaveUser(name, email, password) {
     const verificationToken = crypto.randomBytes(32).toString('hex');
     const verified = false
+    const userType = "freemium" //"premium"
 
     let data = new UserAccount({
-        name, email, password, verificationToken, verified
+        name, email, password, verificationToken, verified, userType
     })
 
     let save = await data.save()

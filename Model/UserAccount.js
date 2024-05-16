@@ -6,6 +6,7 @@ const UserAccount = mongoose.model('UserAccount', {
     password: { type: String },
     verificationToken: { type: String },
     verified: { type: Boolean },
+    userType: { type: String },
 });
 
 module.exports = UserAccount

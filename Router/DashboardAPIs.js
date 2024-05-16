@@ -56,5 +56,27 @@ router.get("/my-songs", verifyToken, verifiedUserEmail, async (req, res) => {
 
 })
 
+router.get("/profile", verifyToken, verifiedUserEmail, async (req, res) => {
+
+    try {
+
+        const UID = req.cookies.UID;
+
+        let User = await UserAccount.findOne({ _id: UID })
+        let UserType = User.userType;
+
+        if(UserType=="" || !UserType){
+            UserType = "freemium"
+        }
+
+        res.render("UserProfile", {UserType})
+
+    } catch (error) {
+        console.log(error);
+        res.send("Error")
+    }
+
+
+})
 
 module.exports = router;
