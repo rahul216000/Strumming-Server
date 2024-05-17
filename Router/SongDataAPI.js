@@ -73,6 +73,9 @@ router.get("/edit-song/:SongName", verifyToken, verifiedUserEmail, async (req, r
         // Check whether this user previouly ever used any premium chords
 
         let Patterns = CurrentSongData.StrummingPatterns
+        if(!Patterns){
+            return res.render("EditSongPanelFreemium", { SongName, CurrentSongData })
+        }
         Patterns = JSON.parse(Patterns);
 
         let AllowedChords = [  "Empty",  "A",    "Am",    "A7",    "Am7",    "B",    "Bm",    "B7",    "Bm7",    "Bb",    "Bbm",    "Bb7",    "Bbm7",    "C",    "Cm",    "C7",    "Cm7",    "D",    "Dm",    "D7",    "Dm7",    "Db",    "Dbm",    "Db7",    "Dbm7",    "E",    "Em",    "E7",    "Em7",    "Eb",    "Ebm",    "Eb7",    "Ebm7",    "F",    "Fm",    "F7",    "Fm7",    "G",    "Gm",    "G7",    "Gm7",    "Gb",    "Gbm",    "Gb7",    "Gbm7",    "Ab",    "Abm",    "Ab7",    "Abm7",]

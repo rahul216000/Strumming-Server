@@ -131,7 +131,7 @@ function ChangeAllBarsMode() {
         document.querySelector('#RestartVideo').click()
     }
     document.getElementById("GenerateVideo").style.display = "inline-block"
-    document.getElementById("AdvancedMode").style.display = "inline-block"
+    // document.getElementById("AdvancedMode").style.display = "inline-block"
 
     document.getElementById("AdvancedModeExit").style.display = "none"
     document.getElementById("PlayPauseVideo").style.display = "none"
@@ -333,7 +333,7 @@ function GetMainValueByTimeSign() {
     CancelTimeSign()
 
     if(isAdvancedMode){
-        AdvancedMode()
+        // AdvancedMode()
     }else{
         DisplayStrummingPattern()
     }
@@ -654,7 +654,7 @@ function AddthisPattern() {
     }
     document.getElementById("loading").style.display = "none"
     document.getElementById("GenerateVideo").style.display = "inline-block"
-    document.getElementById("AdvancedMode").style.display = "inline-block"
+    // document.getElementById("AdvancedMode").style.display = "inline-block"
 
     document.getElementById("AdvancedModeExit").style.display = "none"
     document.getElementById("PlayPauseVideo").style.display = "none"
@@ -2898,7 +2898,7 @@ async function FetchFiles() {
     document.getElementById("loading").style.display = "none"
     IntensityArr = []
     if (isAdvancedMode) {
-        document.getElementById("AdvancedMode").style.display = "none"
+        // document.getElementById("AdvancedMode").style.display = "none"
     }
     document.getElementById("StartVideo").style.display = "inline-block"
 
@@ -2980,13 +2980,13 @@ async function StroeFiles(AudioArr, VideoArr, DiagramsArr) {
     AudioArr.push("Click1.wav")
     AudioArr.push("Click2.wav")
 
-    let pairs = ["", "1", "2", "3"]
+    // let pairs = ["", "1", "2", "3"]
 
-    let randomNumber = Math.floor(Math.random() * 4);
+    // let randomNumber = Math.floor(Math.random() * 4);
 
-    RandomRightHandVideo = pairs[randomNumber]
+    // RandomRightHandVideo = pairs[randomNumber]
     
-    let LeftHandVideo = [`HandUp-${VideoType}-default${RandomRightHandVideo}.gif`, `HandDown-${VideoType}-default${RandomRightHandVideo}.gif`]
+    let LeftHandVideo = [`HandUp-${VideoType}-default.gif`, `HandDown-${VideoType}-default.gif`]
     
     console.log(LeftHandVideo);
 
@@ -3274,7 +3274,7 @@ function SetVideoType() {
     document.getElementById("StartVideo").style.display = "none"
 
     document.getElementById("GenerateVideo").style.display = "inline-block"
-    document.getElementById("AdvancedMode").style.display = "inline-block"
+    // document.getElementById("AdvancedMode").style.display = "inline-block"
 }
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
@@ -5331,7 +5331,7 @@ async function PreviewAudioOnly() {
     document.getElementById("loading").style.display = "none"
     IntensityArr = []
     if (isAdvancedMode) {
-        document.getElementById("AdvancedMode").style.display = "none"
+        // document.getElementById("AdvancedMode").style.display = "none"
     }
     document.getElementById("StartVideo").style.display = "inline-block"
 
