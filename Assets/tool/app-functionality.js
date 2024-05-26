@@ -742,6 +742,74 @@ function AddthisPattern() {
     CheckRequiresFilesDownload()
 }
 
+// function DisplayStrummingPattern() {
+//     document.getElementById("DiagramsContainer").innerHTML = ""
+
+//     document.getElementById("loading").style.display = "block"
+//     let StrummingPatternArr = localStorage.getItem("StrummingPatternArr");
+
+//     if (!StrummingPatternArr) {
+//         document.getElementById("loading").style.display = "none"
+
+//         return console.log(`No data`);
+//     }
+
+//     StrummingPatternArr = JSON.parse(StrummingPatternArr);
+//     StrummingPatternArr = Object.values(StrummingPatternArr);
+
+//     SetPatternNumber = 0
+//     SetChordNumber = 0
+
+//     // let DisplayPatternData = document.getElementById("DisplayPatternData")
+//     BarHTMLContentArr = CreateDisplayPattern(StrummingPatternArr, "default")
+//     // let content = ""
+//     // BarStartFrom = 10
+//     // let BarEndTo = BarStartFrom + 10
+//     // BarHTMLContentArr.map(function (val, index) {
+//     //     if(BarStartFrom<=index && index<BarEndTo){
+//     //         content+=BarHTMLContentArr[index]
+//     //     }
+//     // })
+
+//     // DisplayPatternData.innerHTML = content
+//     // DisplayPatternData.innerHTML = CreateDisplayPattern(StrummingPatternArr, "default")
+//     // console.log(BarHTMLContentArr[0]);
+//     BarStartFrom = roundToNextTen(BarHTMLContentArr.length) -10;
+//     ShowPagintion()
+//     ShowPagintionBtns()
+//     AutoShowPattern(StrummingPatternArr)
+//     // StorePredeafultIntensity("always")
+//     ShowGenerateBtn()
+//     document.getElementById("loading").style.display = "none"
+//     DisplayEle("NewSectionBtn", "inline-block")
+//     DisplayEle("TransposeKeyBtn", "inline-block")
+//     $('.select-chords-search').select2({
+//         tags: false,
+//         matcher: matchCustom
+//     });
+//     if (showSections) {
+//         ShowSectionNameOnBar()
+//     }
+
+//     // For playwithout bars
+
+//     // let HTMLContent = CreateDisplayPattern(StrummingPatternArr, "default")
+//     // console.log(HTMLContent);
+//     // AutoShowPattern(StrummingPatternArr)
+//     // ShowGenerateBtn()
+//     // document.getElementById("loading").style.display = "none"
+//     // DisplayEle("NewSectionBtn", "inline-block")
+//     // DisplayEle("TransposeKeyBtn", "inline-block")
+//     // $('.select-chords-search').select2({
+//     //     tags: false,
+//     //     matcher: matchCustom
+//     // });
+//     // if (showSections) {
+//     //     ShowSectionNameOnBar()
+//     // }
+
+// }
+
 function DisplayStrummingPattern() {
     document.getElementById("DiagramsContainer").innerHTML = ""
 
@@ -809,6 +877,8 @@ function DisplayStrummingPattern() {
     // }
 
 }
+
+
 
 function AdvancedStrummingPattern() {
     document.getElementById("DiagramsContainer").innerHTML = ""
@@ -911,6 +981,70 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
         // console.log(CutArr);
         SinglePatternLength = countPattern
         NumberOfBeatArr.push(SinglePatternLength)
+
+        // let htmlData = `
+
+        // <div class="line"><div class="pattern-number" onclick="PlayBar(${i})">${i + 1}</div>
+        //     <p id="Section${i}" class="SectionOnBarLine"></p>
+        // </div>
+
+        // <div style="display: inline-block; padding-bottom: 5px;" class="Bars">
+            
+
+        //     <label for="BarNumber${i + 1}" class="SelectBars">
+        //         <input type="checkbox" id="BarNumber${i + 1}" class="SelectBarsCheckBox" >
+        //     </label>
+
+        //     <div class="header">
+
+        //     <div class="dropdown">
+        //         <ul class="dropbtn icons btn-right showLeft whichNumber${i + 1}"  onclick="showDropdown(this)">
+        //             <li></li>
+        //             <li></li>
+        //             <li></li>
+        //         </ul>
+
+        //         <div id="nestedMenu${i + 1}" class="dropdown-contentForNestedMenu">
+        //             <a onclick="ReplicateToLeft(${i})">Copy to Left</a>
+        //             <a onclick="ReplicateToRight(${i})">Copy to Right</a>
+        //             <a onclick="DeletePattern(${i})">Delete</a>
+        //         </div>
+
+        //         <div id="nestedMenuMode${i + 1}" class="dropdown-contentForNestedMenu">
+        //             <a onclick="Mode(${i}, 'Default')">Change Mode to Default</a>
+        //             <a onclick="Mode(${i}, 'Shuffle')">Change Mode to Shuffle</a>
+        //             <a onclick="Mode(${i}, '16ths')">Change Mode to 16ths</a>
+        //         </div>
+
+        //         <div id="nestedMenuSelect${i + 1}" class="dropdown-contentForNestedMenu">
+        //             <a onclick="SelectPatterns()">Select Patterns</a>
+        //             <a onclick="SelectIntensities()" ${(def == "default") ? 'style="display:none"' : 'style="display:block"'}>Select Intensity</a>
+        //         </div>
+
+
+        //         <div id="myDropdown${i + 1}" class="dropdown-content">
+                    
+        //             <a onclick="ShowNestedMenu(${i + 1})" class="NestedMenuEvent">
+        //                 Edit this Bar
+        //             </a>
+
+        //             <a onclick="ShowNestedMenuMode(${i + 1})" class="NestedMenuEvent">
+        //                 Change the bar's division
+        //             </a>
+
+        //             <a onclick="ShowNestedMenuSelect(${i + 1})" class="NestedMenuEvent">
+        //                 Select
+        //             </a>
+
+        //         </div>
+        //     </div>
+
+        //     </div>
+        //     <div id="Display-pattern-intensity${i + 1}" class="container mt-3" ${(def == "default") ? 'style="display:none"' : 'style="display:block"'}>${(loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength))}</div>
+        //     <div id="Display-pattern-number${i + 1}" class="container mt-2">${BarsPatternNumberLoop(i, SinglePatternLength)}</div>
+        //     <div id="Display-pattern-upper${i + 1}" class="container mt-2">${loop2(i, SinglePatternLength)}</div>
+        //     <div id="Display-pattern-lower${i + 1}" class="container mt-3">${loop3(i, SinglePatternLength)}</div>
+        // </div>`
 
         let htmlData = `
 
@@ -1207,171 +1341,180 @@ function loop2(i, SinglePatternLength) {
     let UpperHtml = ""
     for (let j = 0; j < SinglePatternLength; j++) {
 
-        UpperHtml += `<div class="strumming-pattern-Display">
-    <select class="strumming-pattern-select-Display Upper-Pattern UpdatePattern" id="pattern${SetPatternNumber++}" onchange="UpdateStrummingPattern(this, ${SetPatternNumber})" >
-        <option value="U">U &uarr;</option>
-        <option value="D">D &#8595;</option>
-        <option value="E"></option>
-    </select>
+    //     UpperHtml += `<div class="strumming-pattern-Display">
+    // <select class="strumming-pattern-select-Display Upper-Pattern UpdatePattern" id="pattern${SetPatternNumber++}" onchange="UpdateStrummingPattern(this, ${SetPatternNumber})" >
+    //     <option value="U">U &uarr;</option>
+    //     <option value="D">D &#8595;</option>
+    //     <option value="E"></option>
+    // </select>
+    // </div>`
+
+    UpperHtml += `<div class="strumming-pattern-Display">
+    E
     </div>`
 
     }
 
     return UpperHtml
 }
+
 function loop3(i, SinglePatternLength) {
     let LowerHtml = ""
 
     for (let j = 0; j < SinglePatternLength; j++) {
 
 
-        LowerHtml += `<div class="strumming-pattern-Display">
-        <select  name="" class="strumming-pattern-select-Display select-chords-search UpdateChord" autoComplete="on" list="suggestions1" id="chord${SetChordNumber++}"  onchange="UpdateStrummingPattern(this, ${SetChordNumber})">
-        <option value="Empty" selected>--</option>
+    //     LowerHtml += `<div class="strumming-pattern-Display">
+    //     <select  name="" class="strumming-pattern-select-Display select-chords-search UpdateChord" autoComplete="on" list="suggestions1" id="chord${SetChordNumber++}"  onchange="UpdateStrummingPattern(this, ${SetChordNumber})">
+    //     <option value="Empty" selected>--</option>
 
-        <option value="A" >A</option>
-        <option value="Am" >Am</option>
-        <option value="A7" >A7</option>
-        <option value="Am7" >Am7</option>
-        <option value="Amaj7" >Amaj7</option>
-        <option value="Am7b5" >Am7b5</option>
-        <option value="Adim" >Adim</option>
-        <option value="Asus2" >Asus2</option>
-        <option value="Asus4" >Asus4</option>
-        <option value="A7sus4" >A7sus4</option>
+    //     <option value="A" >A</option>
+    //     <option value="Am" >Am</option>
+    //     <option value="A7" >A7</option>
+    //     <option value="Am7" >Am7</option>
+    //     <option value="Amaj7" >Amaj7</option>
+    //     <option value="Am7b5" >Am7b5</option>
+    //     <option value="Adim" >Adim</option>
+    //     <option value="Asus2" >Asus2</option>
+    //     <option value="Asus4" >Asus4</option>
+    //     <option value="A7sus4" >A7sus4</option>
 
-        <option value="B" >B</option>
-        <option value="Bm" >Bm</option>
-        <option value="B7" >B7</option>
-        <option value="Bm7" >Bm7</option>
-        <option value="Bmaj7" >Bmaj7</option>
-        <option value="Bm7b5" >Bm7b5</option>
-        <option value="Bdim" >Bdim</option>
-        <option value="Bsus2" >Bsus2</option>
-        <option value="Bsus4" >Bsus4</option>
-        <option value="B7sus4" >B7sus4</option>
+    //     <option value="B" >B</option>
+    //     <option value="Bm" >Bm</option>
+    //     <option value="B7" >B7</option>
+    //     <option value="Bm7" >Bm7</option>
+    //     <option value="Bmaj7" >Bmaj7</option>
+    //     <option value="Bm7b5" >Bm7b5</option>
+    //     <option value="Bdim" >Bdim</option>
+    //     <option value="Bsus2" >Bsus2</option>
+    //     <option value="Bsus4" >Bsus4</option>
+    //     <option value="B7sus4" >B7sus4</option>
 
-        <option value="Bb">Bb (A#)</option>
-        <option value="Bbm" >Bbm (A#m)</option>
-        <option value="Bb7" >Bb7 (A#7)</option>
-        <option value="Bbm7" >Bbm7 (A#m7)</option>
-        <option value="Bbmaj7" >Bbmaj7 (A#maj7)</option>
-        <option value="Bbm7b5" >Bbm7b5 (A#m7b5)</option>
-        <option value="Bbdim" >Bbdim</option>
-        <option value="Bbsus2" >Bbsus2</option>
-        <option value="Bbsus4" >Bbsus4</option>
-        <option value="Bb7sus4" >Bb7sus4</option>
+    //     <option value="Bb">Bb (A#)</option>
+    //     <option value="Bbm" >Bbm (A#m)</option>
+    //     <option value="Bb7" >Bb7 (A#7)</option>
+    //     <option value="Bbm7" >Bbm7 (A#m7)</option>
+    //     <option value="Bbmaj7" >Bbmaj7 (A#maj7)</option>
+    //     <option value="Bbm7b5" >Bbm7b5 (A#m7b5)</option>
+    //     <option value="Bbdim" >Bbdim</option>
+    //     <option value="Bbsus2" >Bbsus2</option>
+    //     <option value="Bbsus4" >Bbsus4</option>
+    //     <option value="Bb7sus4" >Bb7sus4</option>
 
        
-        <option value="C" >C</option>
-        <option value="Cm" >Cm</option>
-        <option value="C7" >C7</option>
-        <option value="Cm7" >Cm7</option>
-        <option value="Cmaj7" >Cmaj7</option>
-        <option value="Cm7b5" >Cm7b5</option>
-        <option value="Cdim" >Cdim</option>
-        <option value="Csus2" >Csus2</option>
-        <option value="Csus4" >Csus4</option>
-        <option value="C7sus4" >C7sus4</option>
+    //     <option value="C" >C</option>
+    //     <option value="Cm" >Cm</option>
+    //     <option value="C7" >C7</option>
+    //     <option value="Cm7" >Cm7</option>
+    //     <option value="Cmaj7" >Cmaj7</option>
+    //     <option value="Cm7b5" >Cm7b5</option>
+    //     <option value="Cdim" >Cdim</option>
+    //     <option value="Csus2" >Csus2</option>
+    //     <option value="Csus4" >Csus4</option>
+    //     <option value="C7sus4" >C7sus4</option>
 
 
-        <option value="D" >D</option>
-        <option value="Dm" >Dm</option>
-        <option value="D7" >D7</option>
-        <option value="Dm7" >Dm7</option>
-        <option value="Dmaj7" >Dmaj7</option>
-        <option value="Dm7b5" >Dm7b5</option>
-        <option value="Ddim" >Ddim</option>
-        <option value="Dsus2" >Dsus2</option>
-        <option value="Dsus4" >Dsus4</option>
-        <option value="D7sus4" >D7sus4</option>
+    //     <option value="D" >D</option>
+    //     <option value="Dm" >Dm</option>
+    //     <option value="D7" >D7</option>
+    //     <option value="Dm7" >Dm7</option>
+    //     <option value="Dmaj7" >Dmaj7</option>
+    //     <option value="Dm7b5" >Dm7b5</option>
+    //     <option value="Ddim" >Ddim</option>
+    //     <option value="Dsus2" >Dsus2</option>
+    //     <option value="Dsus4" >Dsus4</option>
+    //     <option value="D7sus4" >D7sus4</option>
 
 
-        <option value="Db" >C# (Db)</option>
-        <option value="Dbm" >C#m (Dbm)</option>
-        <option value="Db7" >C#7 (Db7)</option>
-        <option value="Dbm7" >C#m7 (Dbm7)</option>
-        <option value="Dbmaj7" >C#maj7 (Dbmaj7)</option>
-        <option value="Dbm7b5" >C#m7b5 (Dbm7b5)</option>
-        <option value="Dbdim" >Dbdim</option>
-        <option value="Dbsus2" >Dbsus2</option>
-        <option value="Dbsus4" >Dbsus4</option>
-        <option value="Db7sus4" >Db7sus4</option>
+    //     <option value="Db" >C# (Db)</option>
+    //     <option value="Dbm" >C#m (Dbm)</option>
+    //     <option value="Db7" >C#7 (Db7)</option>
+    //     <option value="Dbm7" >C#m7 (Dbm7)</option>
+    //     <option value="Dbmaj7" >C#maj7 (Dbmaj7)</option>
+    //     <option value="Dbm7b5" >C#m7b5 (Dbm7b5)</option>
+    //     <option value="Dbdim" >Dbdim</option>
+    //     <option value="Dbsus2" >Dbsus2</option>
+    //     <option value="Dbsus4" >Dbsus4</option>
+    //     <option value="Db7sus4" >Db7sus4</option>
 
-        <option value="E" >E</option>
-        <option value="Em" >Em</option>
-        <option value="E7" >E7</option>
-        <option value="Em7" >Em7</option>
-        <option value="Emaj7" >Emaj7</option>
-        <option value="Em7b5" >Em7b5</option>
-        <option value="Edim" >Edim</option>
-        <option value="Esus2" >Esus2</option>
-        <option value="Esus4" >Esus4</option>
-        <option value="E7sus4" >E7sus4</option>
+    //     <option value="E" >E</option>
+    //     <option value="Em" >Em</option>
+    //     <option value="E7" >E7</option>
+    //     <option value="Em7" >Em7</option>
+    //     <option value="Emaj7" >Emaj7</option>
+    //     <option value="Em7b5" >Em7b5</option>
+    //     <option value="Edim" >Edim</option>
+    //     <option value="Esus2" >Esus2</option>
+    //     <option value="Esus4" >Esus4</option>
+    //     <option value="E7sus4" >E7sus4</option>
 
-        <option value="Eb" >Eb (D#)</option>
-        <option value="Ebm" >D#m (Ebm)</option>
-        <option value="Eb7" >D#7 (Eb7)</option>
-        <option value="Ebm7" >D#m7 (Ebm7)</option>
-        <option value="Ebmaj7" >D#maj7 (Ebmaj7)</option>
-        <option value="Ebm7b5" >D#m7b5 (Ebm7b5)</option>
-        <option value="Ebdim" >Ebdim</option>
-        <option value="Ebsus2" >Ebsus2</option>
-        <option value="Ebsus4" >Ebsus4</option>
-        <option value="Eb7sus4" >Eb7sus4</option>
+    //     <option value="Eb" >Eb (D#)</option>
+    //     <option value="Ebm" >D#m (Ebm)</option>
+    //     <option value="Eb7" >D#7 (Eb7)</option>
+    //     <option value="Ebm7" >D#m7 (Ebm7)</option>
+    //     <option value="Ebmaj7" >D#maj7 (Ebmaj7)</option>
+    //     <option value="Ebm7b5" >D#m7b5 (Ebm7b5)</option>
+    //     <option value="Ebdim" >Ebdim</option>
+    //     <option value="Ebsus2" >Ebsus2</option>
+    //     <option value="Ebsus4" >Ebsus4</option>
+    //     <option value="Eb7sus4" >Eb7sus4</option>
 
     
 
-        <option value="F" >F</option>
-        <option value="Fm" >Fm</option>
-        <option value="F7" >F7</option>
-        <option value="Fm7" >Fm7</option>
-        <option value="Fmaj7" >Fmaj7</option>
-        <option value="Fm7b5" >Fm7b5</option>
-        <option value="Fdim" >Fdim</option>
-        <option value="Fsus2" >Fsus2</option>
-        <option value="Fsus4" >Fsus4</option>
-        <option value="F7sus4" >F7sus4</option>
+    //     <option value="F" >F</option>
+    //     <option value="Fm" >Fm</option>
+    //     <option value="F7" >F7</option>
+    //     <option value="Fm7" >Fm7</option>
+    //     <option value="Fmaj7" >Fmaj7</option>
+    //     <option value="Fm7b5" >Fm7b5</option>
+    //     <option value="Fdim" >Fdim</option>
+    //     <option value="Fsus2" >Fsus2</option>
+    //     <option value="Fsus4" >Fsus4</option>
+    //     <option value="F7sus4" >F7sus4</option>
 
 
-        <option value="G" >G</option>
-        <option value="Gm" >Gm</option>
-        <option value="G7" >G7</option>
-        <option value="Gm7" >Gm7</option>
-        <option value="Gmaj7" >Gmaj7</option>
-        <option value="Gm7b5" >Gm7b5</option>
-        <option value="Gdim" >Gdim</option>
-        <option value="Gsus2" >Gsus2</option>
-        <option value="Gsus4" >Gsus4</option>
-        <option value="G7sus4" >G7sus4</option>
+    //     <option value="G" >G</option>
+    //     <option value="Gm" >Gm</option>
+    //     <option value="G7" >G7</option>
+    //     <option value="Gm7" >Gm7</option>
+    //     <option value="Gmaj7" >Gmaj7</option>
+    //     <option value="Gm7b5" >Gm7b5</option>
+    //     <option value="Gdim" >Gdim</option>
+    //     <option value="Gsus2" >Gsus2</option>
+    //     <option value="Gsus4" >Gsus4</option>
+    //     <option value="G7sus4" >G7sus4</option>
 
 
-        <option value="Gb" >F# (Gb)</option>
-        <option value="Gbm" >F#m (Gbm)</option>
-        <option value="Gb7" >F#7 (Gb7)</option>
-        <option value="Gbm7" >F#m7 (Gbm7)</option>
-        <option value="Gbmaj7" >F#maj7 (Gbmaj7)</option>
-        <option value="Gbm7b5" >F#m7b5 (Gbm7b5)</option>
-        <option value="Gbdim" >Gbdim</option>
-        <option value="Gbsus2" >Gbsus2</option>
-        <option value="Gbsus4" >Gbsus4</option>
-        <option value="Gb7sus4" >Gb7sus4</option>
+    //     <option value="Gb" >F# (Gb)</option>
+    //     <option value="Gbm" >F#m (Gbm)</option>
+    //     <option value="Gb7" >F#7 (Gb7)</option>
+    //     <option value="Gbm7" >F#m7 (Gbm7)</option>
+    //     <option value="Gbmaj7" >F#maj7 (Gbmaj7)</option>
+    //     <option value="Gbm7b5" >F#m7b5 (Gbm7b5)</option>
+    //     <option value="Gbdim" >Gbdim</option>
+    //     <option value="Gbsus2" >Gbsus2</option>
+    //     <option value="Gbsus4" >Gbsus4</option>
+    //     <option value="Gb7sus4" >Gb7sus4</option>
 
 
-        <option value="Ab" >Ab (G#)</option>
-        <option value="Abm" >Abm (G#m)</option>
-        <option value="Ab7" >Ab7 (G#7)</option>
-        <option value="Abm7" >Abm7 (G#m7)</option>
-        <option value="Abmaj7" >Abmaj7 (G#maj7)</option>
-        <option value="Abm7b5" >Abm7b5 (G#m7b5)</option>
-        <option value="Abdim" >Abdim</option>
-        <option value="Absus2" >Absus2</option>
-        <option value="Absus4" >Absus4</option>
-        <option value="Ab7sus4" >Ab7sus4</option>
+    //     <option value="Ab" >Ab (G#)</option>
+    //     <option value="Abm" >Abm (G#m)</option>
+    //     <option value="Ab7" >Ab7 (G#7)</option>
+    //     <option value="Abm7" >Abm7 (G#m7)</option>
+    //     <option value="Abmaj7" >Abmaj7 (G#maj7)</option>
+    //     <option value="Abm7b5" >Abm7b5 (G#m7b5)</option>
+    //     <option value="Abdim" >Abdim</option>
+    //     <option value="Absus2" >Absus2</option>
+    //     <option value="Absus4" >Absus4</option>
+    //     <option value="Ab7sus4" >Ab7sus4</option>
 
 
-    </select>
-    </div>`
+    // </select>
+    // </div>`
+
+    LowerHtml += `<div class="strumming-pattern-Display">
+    E
+</div>`
 
     }
 
@@ -5171,7 +5314,8 @@ function ShowPagintion(){
     let content = ""
     let BarEndTo = BarStartFrom + 10
 
-    let NewAppendHtmlArr = BarHTMLContentArr.slice(BarStartFrom, BarEndTo);
+    let NewAppendHtmlArr = BarHTMLContentArr
+    // let NewAppendHtmlArr = BarHTMLContentArr.slice(BarStartFrom, BarEndTo);
 
     if(NewAppendHtmlArr.length ==0 || BarStartFrom<0){
         return
