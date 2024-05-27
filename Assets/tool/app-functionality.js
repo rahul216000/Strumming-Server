@@ -332,11 +332,11 @@ function GetMainValueByTimeSign() {
     CreatePatternBoxes()
     CancelTimeSign()
 
-    if(isAdvancedMode){
-        AdvancedMode()
-    }else{
-        DisplayStrummingPattern()
-    }
+    // if(isAdvancedMode){
+    //     AdvancedMode()
+    // }else{
+    //     DisplayStrummingPattern()
+    // }
 
     if (CheckMetroOn) {
         document.querySelector('#RestartVideo').click()
