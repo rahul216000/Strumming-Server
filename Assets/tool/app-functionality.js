@@ -1350,7 +1350,7 @@ function loop2(i, SinglePatternLength) {
     // </div>`
 
     UpperHtml += `<div class="strumming-pattern-Display">
-    
+    E
     </div>`
 
     }
@@ -1513,7 +1513,7 @@ function loop3(i, SinglePatternLength) {
     // </div>`
 
     LowerHtml += `<div class="strumming-pattern-Display">
-    
+    E
 </div>`
 
     }
