@@ -168,7 +168,7 @@ function StartVideo() {
     // console.log(MetronomeClickArr);
     if(PreviewAudioPlay){
         // PreviewAudioMetronome.start();
-        customTimer(PreviewAudioMetronomeOnly, 60000/130);
+        customTimer(PreviewAudioMetronomeOnly, 60000/240);
     }else{
         Metronome.start();
     }
