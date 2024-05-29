@@ -1,4 +1,5 @@
 import MetronomeTimer from './MetronomeTimer.js';
+import NewMetronomeTimer from './NewMetronomeTimer.js';
 
 let beatsPerMeasure = 4;
 let count = 0;
@@ -167,8 +168,7 @@ function StartVideo() {
     CutArr = NumberOfBeatArr
     // console.log(MetronomeClickArr);
     if(PreviewAudioPlay){
-        // PreviewAudioMetronome.start();
-        customTimer(PreviewAudioMetronomeOnly, 60000/240);
+        PreviewAudioMetronome.start();
     }else{
         Metronome.start();
     }
@@ -193,7 +193,7 @@ function PlayVideo() {
 
 function PauseVideo() {
     if(PreviewAudioPlay){
-        // PreviewAudioMetronome.stop();
+        PreviewAudioMetronome.stop();
     }else{
         Metronome.stop();
     }
@@ -343,7 +343,7 @@ function changeMetronomeInterval(bpm, speed) {
     }
 
     if(PreviewAudioPlay){
-        // PreviewAudioMetronome.timeInterval = 60000 / (bpm * SetUpSpeed)
+        PreviewAudioMetronome.timeInterval = 60000 / (bpm * SetUpSpeed)
     }else{
         Metronome.timeInterval = 60000 / (bpm * SetUpSpeed)
     }
@@ -999,35 +999,9 @@ function StopSounding(StoreSound) {
 
 }
 
-let previousTime = performance.now();
+// let previousTime = performance.now();
 
-function customTimer(callback, interval) {
-    function tick(currentTime) {
-        // Calculate the time elapsed since the last tick
-        const elapsed = currentTime - previousTime;
 
-        if (elapsed >= interval) {
-            // Update the previous time
-            previousTime = currentTime - (elapsed % interval);
-
-            // Call the callback function
-            callback();
-        }
-
-        // Schedule the next tick
-        requestAnimationFrame(tick);
-    }
-
-    // Start the timer
-    requestAnimationFrame(tick);
-}
-
-// Example usage
-function myFunction() {
-    console.log('Function executed at', performance.now());
-}
-
-// Run myFunction every 1 millisecond
 
 
 function test(){
@@ -1037,7 +1011,7 @@ function test(){
 
 const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
 // const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
-// const PreviewAudioMetronome = new MetronomeTimer(test, 60000/60, { immediate: true });
+const PreviewAudioMetronome = new NewMetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
         document.getElementById("BtnWithVideo").style.display = "block"
