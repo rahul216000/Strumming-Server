@@ -1106,8 +1106,8 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
             </div>
             <div id="Display-pattern-intensity${i + 1}" class="container mt-3" ${(def == "default") ? 'style="display:none"' : 'style="display:block"'}>${(loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength))}</div>
             <div id="Display-pattern-number${i + 1}" class="container mt-2">${BarsPatternNumberLoop(i, SinglePatternLength)}</div>
-            <div id="Display-pattern-upper${i + 1}" class="container mt-2">${loop2(i, SinglePatternLength)}</div>
-            <div id="Display-pattern-lower${i + 1}" class="container mt-3">${loop3(i, SinglePatternLength)}</div>
+            <div id="Display-pattern-upper${i + 1}" class="container mt-2">${loop2(StrummingPatternArr, i, SinglePatternLength)}</div>
+            <div id="Display-pattern-lower${i + 1}" class="container mt-3">${loop3(StrummingPatternArr, i, SinglePatternLength)}</div>
         </div>`
         appendData += htmlData
 
@@ -1337,7 +1337,7 @@ function BarsPatternNumberLoop(i, SinglePatternLength) {
     return PatternNumber
 }
 
-function loop2(i, SinglePatternLength) {
+function loop2(StrummingPatternArr, i, SinglePatternLength) {
     let UpperHtml = ""
     for (let j = 0; j < SinglePatternLength; j++) {
 
@@ -1350,7 +1350,7 @@ function loop2(i, SinglePatternLength) {
     // </div>`
 
     UpperHtml += `<div class="strumming-pattern-Display">
-    E
+    
     </div>`
 
     }
@@ -1358,7 +1358,7 @@ function loop2(i, SinglePatternLength) {
     return UpperHtml
 }
 
-function loop3(i, SinglePatternLength) {
+function loop3(StrummingPatternArr, i, SinglePatternLength) {
     let LowerHtml = ""
 
     for (let j = 0; j < SinglePatternLength; j++) {
@@ -1513,7 +1513,7 @@ function loop3(i, SinglePatternLength) {
     // </div>`
 
     LowerHtml += `<div class="strumming-pattern-Display">
-    E
+    
 </div>`
 
     }
