@@ -723,7 +723,7 @@ function playClickMetronome() {
 
 
 function PreviewAudioMetronomeOnly() {
-    console.log('Function executed at', performance.now());
+    // console.log('Function executed at', performance.now());
 
 
     try {
@@ -872,6 +872,7 @@ function PreviewAudioMetronomeOnly() {
         }
     }
 
+    // console.log('Function completed at', performance.now());
 
 }
 
@@ -1010,8 +1011,8 @@ function test(){
 }
 
 const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
-// const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
-const PreviewAudioMetronome = new NewMetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
+const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
+// const PreviewAudioMetronome = new NewMetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
         document.getElementById("BtnWithVideo").style.display = "block"

@@ -3228,7 +3228,7 @@ async function SetFilesToDisplay(AudioArr, VideoArr, DiagramsArr) {
 
         const url = await FetchFileFromDB(AudioArr[i])
         let container = document.getElementById("AudioSecion");
-        container.innerHTML += `<audio src="${url}" id="${AudioArr[i]}"></audio>`
+        container.innerHTML += `<audio src="${url}" id="${AudioArr[i]}" preload="auto"></audio>`
     }
 
     // For Video
@@ -5654,7 +5654,7 @@ async function SetAudioFilesToDisplay(AudioArr) {
 
         const url = await FetchFileFromDB(AudioArr[i])
         let container = document.getElementById("AudioSecion");
-        container.innerHTML += `<audio src="${url}" id="${AudioArr[i]}"></audio>`
+        container.innerHTML += `<audio src="${url}" id="${AudioArr[i]}" preload="auto"></audio>`
     }
 
 }
