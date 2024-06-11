@@ -7,6 +7,8 @@ let VideoType = "handmade"
 let SetPatternNumber = 0
 let SetChordNumber = 0
 let IncrementPatternsNumber = 0
+let IncrementPatternsNumberShowPlayMode = 0
+let IncrementPatternsNumberLoop3ShowPlayMode = 0
 let BeatIdNumber = 0
 let InstantStartFrom = 0
 let NumberOfBeatArr = []
@@ -930,6 +932,8 @@ function CreateDisplayPattern(StrummingPatternArr, def) {
     let appendData = ""
     let EveryBoxNumber = 0, SinglePatternLength = 0
     IncrementPatternsNumber = 0
+    IncrementPatternsNumberShowPlayMode = 0
+    IncrementPatternsNumberLoop3ShowPlayMode = 0
     BeatIdNumber = 0
 
     let ModeArr = localStorage.getItem("ModeArr");
@@ -1127,6 +1131,7 @@ function loop1(StrummingPatternArr, def, EveryBoxNumber, SinglePatternLength) {
             // EveryBoxNumber++
             
             IncrementPatternsNumber++
+
             // console.log(IncrementPatternsNumber);
             // console.log(StrummingPatternArr[IncrementPatternsNumber-1]);
             if (StrummingPatternArr[IncrementPatternsNumber - 1][0] == "E") {
@@ -1348,10 +1353,18 @@ function loop2(StrummingPatternArr, i, SinglePatternLength) {
     //     <option value="E"></option>
     // </select>
     // </div>`
+    // console.log();
+    let strums = StrummingPatternArr[IncrementPatternsNumberShowPlayMode][0]
+
+    if(strums=="E"){
+        strums = "&nbsp;"
+    }
 
     UpperHtml += `<div class="strumming-pattern-Display">
-    
+        ${strums}
     </div>`
+
+    IncrementPatternsNumberShowPlayMode++
 
     }
 
@@ -1512,9 +1525,17 @@ function loop3(StrummingPatternArr, i, SinglePatternLength) {
     // </select>
     // </div>`
 
-    LowerHtml += `<div class="strumming-pattern-Display">
+    let chord = StrummingPatternArr[IncrementPatternsNumberLoop3ShowPlayMode][1]
+
+    if(chord=="Empty"){
+        chord = "&nbsp;"
+    }
     
-</div>`
+    LowerHtml += `<div class="strumming-pattern-Display">
+            ${chord}
+        </div>`
+
+    IncrementPatternsNumberLoop3ShowPlayMode++
 
     }
 
