@@ -1,6 +1,6 @@
 import MetronomeTimer from './MetronomeTimer.js';
 import NewMetronomeTimer from './NewMetronomeTimer.js';
-
+let worker = new Worker('/tool/worker.js');
 let beatsPerMeasure = 4;
 let count = 0;
 let isRunning = false;
@@ -44,6 +44,39 @@ let RestartVideoBtn = document.querySelector('#RestartVideo');
 let PlayPauseVideoBtn = document.querySelector('#PlayPauseVideo');
 let InstantPlaySection = document.querySelector('#InstantPlaySection');
 // let PlayVideo = document.querySelector('#PlayVideo');
+
+
+// main.js
+
+worker.onmessage = function(e) {
+    // console.log(`Work`);
+    if (e.data == 'tick') {
+        // playClick();
+        PreviewAudioMetronomeOnly()
+    }
+};
+
+function startMetronome() {
+    console.log(bpm);
+    worker.postMessage({ command: 'start', interval: 250 });
+}
+
+function stopMetronome() {
+    worker.postMessage({ command: 'stop' });
+}
+
+function updateBPM(newBpm) {
+    // let Exportbpm = newBpm;
+    worker.postMessage({ command: 'update', interval: newBpm });
+}
+
+function playClick() {
+    // Play a click sound here
+
+    console.log(performance.now());
+}
+
+
 
 
 
@@ -124,6 +157,8 @@ function StartVideo() {
         }
     }
 
+    console.log(bpm);
+
     let isMetronomeChecked = document.getElementById("metronomeSound").checked;
     if (isMetronomeChecked) {
         metronomeSound = true;
@@ -168,7 +203,8 @@ function StartVideo() {
     CutArr = NumberOfBeatArr
     // console.log(MetronomeClickArr);
     if(PreviewAudioPlay){
-        PreviewAudioMetronome.start();
+        // PreviewAudioMetronome.start();
+        startMetronome()
     }else{
         Metronome.start();
     }
@@ -181,7 +217,8 @@ function PlayVideo() {
     if (!localStorage.getItem("Metronome")) {
 
         if(PreviewAudioPlay){
-            PreviewAudioMetronome.start();
+            // PreviewAudioMetronome.start();
+            startMetronome()
         }else{
             Metronome.start();
         }
@@ -193,7 +230,8 @@ function PlayVideo() {
 
 function PauseVideo() {
     if(PreviewAudioPlay){
-        PreviewAudioMetronome.stop();
+        // PreviewAudioMetronome.stop();
+        stopMetronome()
     }else{
         Metronome.stop();
     }
@@ -248,7 +286,7 @@ function RestartVideo() {
     bar = "";
     UpperPattern = ""
 
-    PauseVideo()
+    // PauseVideo()
     StartVideo()
 }
 
@@ -343,7 +381,10 @@ function changeMetronomeInterval(bpm, speed) {
     }
 
     if(PreviewAudioPlay){
-        PreviewAudioMetronome.timeInterval = 60000 / (bpm * SetUpSpeed)
+        // console.log(SetUpSpeed);
+        let exportBPM = 60000 / (bpm * SetUpSpeed)
+        // PreviewAudioMetronome.timeInterval = 60000 / (bpm * SetUpSpeed)
+        updateBPM(exportBPM)
     }else{
         Metronome.timeInterval = 60000 / (bpm * SetUpSpeed)
     }
@@ -723,7 +764,7 @@ function playClickMetronome() {
 
 
 function PreviewAudioMetronomeOnly() {
-    // console.log('Function executed at', performance.now());
+    console.log('Function executed at', performance.now());
 
 
     try {
@@ -1010,8 +1051,8 @@ function test(){
     console.log(performance.now());
 }
 
-const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
-const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
+// const Metronome = new MetronomeTimer(playClickMetronome, bpm, { immediate: true });
+// const PreviewAudioMetronome = new MetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
 // const PreviewAudioMetronome = new NewMetronomeTimer(PreviewAudioMetronomeOnly, bpm, { immediate: true });
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {

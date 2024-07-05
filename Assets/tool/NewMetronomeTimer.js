@@ -32,9 +32,12 @@ function MetronomeTimer(callback, timeInterval, options = {}) {
 
         const currentTime = performance.now();
         const drift = currentTime - this.expected;
-
+        
         if (drift >= 0) {
+            console.log("Sript in start: "+ performance.now());
             callback();
+            console.log("Sript after callbck : "+ performance.now());
+
             this.expected += this.timeInterval;
         }
 

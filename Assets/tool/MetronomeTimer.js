@@ -1,4 +1,5 @@
 // Add accurate timer constructor function
+var StoreTime = 0
 
 function MetronomeTimer(callback, timeInterval, options) {
     this.timeInterval = timeInterval;
@@ -27,8 +28,10 @@ function MetronomeTimer(callback, timeInterval, options) {
     }
     // Round method that takes care of running the callback and adjusting the time
     this.round = () => {
-      // console.log(performance.now());
 
+      console.log(performance.now());
+      // console.log(performance.now() - StoreTime);
+      StoreTime = performance.now();
       // console.log('timeout', this.timeout);
       // The drift will be the current moment in time for this round minus the expected time..
       let drift = performance.now() - this.expected;
@@ -40,17 +43,24 @@ function MetronomeTimer(callback, timeInterval, options) {
           options.errorCallback();
         }
       }
+
+      // this.timeInterval = this.timeInterval - StoreTime
+      // console.log(performance.now());
+
       callback();
       // Increment expected time by time interval for every round after running the callback function.
       drift = performance.now() - this.expected;
       this.expected += this.timeInterval;
+      // StoreTime = performance.now() - StoreTime;
+      // console.log(StoreTime);
 
       // console.log(this.expected);
       // console.log('Drift:', drift);
       // console.log('Next round time interval:', this.expected - performance.now() );
-      // console.log(performance.now());
+      console.log(performance.now());
 
       // Run timeout again and set the timeInterval of the next iteration to the original time interval minus the drift.
+      // this.timeout = setTimeout(this.round, this.timeInterval);
       this.timeout = setTimeout(this.round, this.expected - performance.now());
       // this.timeout = setTimeout(this.round, this.timeInterval - drift);
 
