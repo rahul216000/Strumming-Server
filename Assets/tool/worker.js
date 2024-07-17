@@ -12,11 +12,18 @@ self.onmessage = function(e) {
         interval = e.data.interval;
     }
 };
-
+// let StartMetronomeTime
 function startMetronome() {
     stopMetronome();
+    let MainInterval = interval
+
     intervalId = setInterval(() => {
+        let StartMetronomeTime = performance.now()
         self.postMessage('tick');
+        let drift = performance.now() - StartMetronomeTime
+        // console.log(drift);
+        interval = MainInterval - drift
+        // console.log(`Next Interval in ${interval}`);
     }, interval);
 }
 
