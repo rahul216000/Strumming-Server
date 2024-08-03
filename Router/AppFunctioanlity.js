@@ -68,7 +68,7 @@ router.get(`/delete/:ID`, (req, res) => {
     res.send("Deleted")
 
 })
-
+// Obaladi Audio
 router.post('/generate-video', async (req, res) => {
     var { StrumminPatternArr, SingleBeatArr, IntensityArr, MetronomeClicksArr, Id, Time, BPM, MetronomeOnOff, TimeSignature } = req.body;
 
@@ -197,13 +197,45 @@ router.post('/generate-video', async (req, res) => {
 
 
     if (output) {
-        fs.rmSync(path.join(`${__dirname}/../public/downloads/${Id}`), { recursive: true, force: true });
+        // fs.rmSync(path.join(`${__dirname}/../public/downloads/${Id}`), { recursive: true, force: true });
     }
 
 
     return res.send("Generated")
 
 })
+router.post('/temp', async (req, res)=>{
+
+    let Id= "18.23.416.80"
+    let Time= "16.80"
+    let ConcatAudiosFiles = ""
+
+    for (let i = 0; i < 685; i++) {
+
+        await TrimAudioLength(`./public/downloads/${Id}/${Time}/ChordsAudios/A-default-down.wav`, 0.25, `./public/downloads/${Id}/${Time}/ChordsAudios/AudioCheck${i}`)
+        // ConcatAudiosFiles += `file 'ChordsAudios/Audio${i}.wav'
+        // `
+
+    }
+
+    // Creating Right File
+    // fs.writeFileSync(`./public/downloads/${Id}/${Time}/temp.txt`, ConcatAudiosFiles);
+
+
+    // await ConcatAudiosForMetronome(`./public/downloads/${Id}/${Time}/ChordsAudios/Metronome.txt`, `./public/downloads/${Id}/${Time}/ConcatMetronomeAudio`)
+
+    // await MergeAudios(`./public/downloads/${Id}/${Time}/ConcatMetronomeAudio.wav`, `./public/downloads/${Id}/${Time}/ConcatChordAudio.wav`, `./public/downloads/${Id}/${Time}/MergedAudio`)
+
+    return res.send("o")
+    // console.log(ConcatAudiosFiles);
+    let Audio1 = await ConcatAudios(`./public/downloads/${Id}/${Time}/temp.txt`, 685, `./public/downloads/${Id}/${Time}/ConcatChordAudio`)
+
+    res.send("Done")
+
+
+})
+// Corerect Working
+// ffmpeg -f concat -safe 0 -i ./public/downloads/18.23.416.80/16.80/temp.txt -c copy output.wav
 
 router.post('/generate-video-old', async (req, res) => {
     var { MainArray, Id, Time, BPM, MetronomeOnOff, TimeSignature, DefaultTimeSign } = req.body;

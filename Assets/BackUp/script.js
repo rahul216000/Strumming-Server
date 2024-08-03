@@ -504,6 +504,7 @@ function StrummingPattern(pattern, chord, number) {
 }
 
 
+
 function playClickMetronome() {
 
     // let time = new Date().getTime()
